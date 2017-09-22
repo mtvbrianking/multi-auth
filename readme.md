@@ -1,2 +1,2 @@
-# Laravel Multi-Authentication Package#
+# Laravel Multi-Authentication Package #
 
