@@ -1,6 +1,7 @@
 ## Laravel Multi-Authentication Package
-This package will create a new athentication guard **'admin'**, as well as scaffold all of the routes and views you need for admin authentication. 
-The package will install a layout view, registration and login views, as well as routes for all authentication end-points. A HomeController will also be generated to handle post-login requests to your application's dashboard.
+This package will create a new authentication guard called **'admin'**, as well as scaffold all of the routes and views you need for admin authentication. 
+The package will add registration and login views, as well as routes for all authentication end-points to 'admin'.
+A HomeController will also be generated to handle post-login requests from your application's dashboard.
 
 ### Installation
 `$ composer require bmatovu/multi-auth`
@@ -24,9 +25,11 @@ The package will install a layout view, registration and login views, as well as
 ### Publish Configurations
 ```
 $ php artisan vendor:publish \
-    --provider="Bmatovu\MultiAuth\MultiAuthServiceProvider" \
+    --provider="Bmatovu\MultiAuth\Providers\MultiAuthServiceProvider" \
     --tag=config
 ```
+
+If you so wish; you may publish `migrations` and `views` to your project as well.
 
 ### Run Database Migrations
 `$ php artisan migrate`
