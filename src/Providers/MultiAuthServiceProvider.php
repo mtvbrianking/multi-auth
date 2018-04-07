@@ -14,10 +14,18 @@ class MultiAuthServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        # Configurations
+        # Artisan vendor publish
         $this->publishes([
             __DIR__.'/../config/multi-auth.php' => config_path('multi-auth.php'),
-        ]);
+        ], 'config');
+
+        $this->publishes([
+            __DIR__.'/../migrations/' => database_path('migrations')
+        ], 'migrations');
+
+        $this->publishes([
+            __DIR__.'/../views' => resource_path('views\vendor\multi-auth'),
+        ], 'views');
 
         # Migrations
         $this->loadMigrationsFrom(__DIR__.'/../migrations');
