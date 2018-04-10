@@ -50,9 +50,10 @@ class MultiAuthServiceProvider extends ServiceProvider
     public function register()
     {
         # Default Package Configuration
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/multi-auth.php', 'auth'
-        );
+        $this->mergeConfigFrom(__DIR__.'/../config/multi-auth.php', 'auth');
+
+        # Register migrations
+        $this->loadMigrationsFrom(__DIR__.'/migrations');
 
         # Middleware
         $this->app->make('Bmatovu\MultiAuth\Controllers\Admin\HomeController');
