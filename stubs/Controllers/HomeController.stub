@@ -1,0 +1,26 @@
+<?php
+
+namespace {{namespace}}\Http\Controllers;
+
+use {{namespace}}\Http\Controllers\Controller;
+
+class HomeController extends Controller
+{
+
+    protected $redirectTo = '/{{singularSlug}}/login';
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('{{singularSlug}}');
+    }
+
+    public function index() {
+        return view('{{singularSlug}}.home');
+    }
+
+}

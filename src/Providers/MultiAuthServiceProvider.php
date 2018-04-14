@@ -2,6 +2,7 @@
 
 namespace Bmatovu\MultiAuth\Providers;
 
+use Bmatovu\MultiAuth\Console\MultiAuthInstallCommand;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,19 +15,6 @@ class MultiAuthServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        # Artisan vendor publish
-        $this->publishes([
-            __DIR__.'/../config/multi-auth.php' => config_path('multi-auth.php'),
-        ], 'config');
-
-        $this->publishes([
-            __DIR__.'/../migrations/' => database_path('migrations')
-        ], 'migrations');
-
-        $this->publishes([
-            __DIR__.'/../views' => resource_path('views\vendor\multi-auth'),
-        ], 'views');
-
         # Migrations
         $this->loadMigrationsFrom(__DIR__.'/../migrations');
 
@@ -35,6 +23,12 @@ class MultiAuthServiceProvider extends ServiceProvider
 
         # Views
         $this->loadViewsFrom(__DIR__.'/../views', 'multi-auth');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                MultiAuthInstallCommand::class,
+            ]);
+        }
 
         # Middleware
         $router->aliasMiddleware('admin', \Bmatovu\MultiAuth\Middleware\RedirectIfNotAdmin::class);
@@ -50,34 +44,15 @@ class MultiAuthServiceProvider extends ServiceProvider
     public function register()
     {
         # Default Package Configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/multi-auth.php', 'auth');
+        $this->mergeConfigFrom(config_path('auth'), 'auth');
 
-        # Register migrations
-        $this->loadMigrationsFrom(__DIR__.'/migrations');
-
-        # Middleware
+        # Controllers
         $this->app->make('Bmatovu\MultiAuth\Controllers\Admin\HomeController');
         $this->app->make('Bmatovu\MultiAuth\Controllers\Admin\Auth\ForgotPasswordController');
         $this->app->make('Bmatovu\MultiAuth\Controllers\Admin\Auth\LoginController');
         $this->app->make('Bmatovu\MultiAuth\Controllers\Admin\Auth\RegisterController');
         $this->app->make('Bmatovu\MultiAuth\Controllers\Admin\Auth\ResetPasswordController');
 
-    }
-
-    /**
-     * Merge the given configuration with the existing configuration (Recursively)
-     *
-     * Source: https://github.com/laravel/framework/pull/16328
-     *
-     * @param  string  $path
-     * @param  string  $key
-     * @return void
-     */
-    protected function mergeConfigFrom($path, $key)
-    {
-        $config = $this->app['config']->get($key, []);
-
-        $this->app['config']->set($key, array_merge_recursive(require $path, $config));
     }
 
 }

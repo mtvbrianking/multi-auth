@@ -2,7 +2,7 @@
 
 namespace Bmatovu\MultiAuth\Controllers\Admin;
 
-use Bmatovu\MultiAuth\Controllers\Controller;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Bmatovu\MultiAuth\Controllers\Admin\Auth;
+namespace {{namespace}}\Http\Controllers\{{singularClass}}\Auth;
 
-use App\Http\Controllers\Controller;
+use {{namespace}}\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/home';
+    protected $redirectTo = '/{{singularSlug}}/home';
 
     /**
      * Create a new controller instance.
@@ -36,7 +36,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin.guest', ['except' => 'logout']);
+        $this->middleware('{{singularSnake}}.guest', ['except' => 'logout']);
     }
 
     /**
@@ -46,7 +46,7 @@ class LoginController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard('admin');
+        return Auth::guard('{{singularSnake}}');
     }
 
     /**
@@ -56,7 +56,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('multi-auth::admin.auth.login');
+        return view('{{singularSlug}}.auth.login');
     }
 
     /**
@@ -74,7 +74,7 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/admin');
+        return redirect('/{{singularSlug}}');
     }
 
 }
