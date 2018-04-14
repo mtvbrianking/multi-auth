@@ -43,9 +43,6 @@ class MultiAuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        # Default Package Configuration
-        $this->mergeConfigFrom(config_path('auth'), 'auth');
-
         # Controllers
         $this->app->make('Bmatovu\MultiAuth\Controllers\Admin\HomeController');
         $this->app->make('Bmatovu\MultiAuth\Controllers\Admin\Auth\ForgotPasswordController');

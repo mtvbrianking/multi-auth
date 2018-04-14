@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}}\Http\Controllers;
+namespace {{namespace}}\Http\Controllers\{{singularClass}};
 
 use {{namespace}}\Http\Controllers\Controller;
 
