@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/{{singularSlug}}/home';
+    protected $redirectTo = '/{{singularSlug}}';
 
     /**
      * Create a new controller instance.
@@ -36,7 +36,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('{{singularSnake}}.guest', ['except' => 'logout']);
+        $this->middleware('{{singularSnake}}.guest:{{singularSnake}}', ['except' => 'logout']);
     }
 
     /**

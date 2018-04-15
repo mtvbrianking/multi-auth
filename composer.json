@@ -1,30 +1,40 @@
 {
-    "name": "bmatovu/multi-auth",
-    "description": "Laravel Multi Authentication",
-    "type": "library",
-    "keywords": [
-        "laravel",
-        "package",
-        "multi",
-        "authentication"
-    ],
-    "homepage": "https://bmatovu.com/packages/multi-auth",
-    "require": {
-        "php": ">=5.6.4"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Brian Matovu",
-            "email": "mtvbrianking@gmail.com",
-            "homepage": "https://bmatovu.com",
-            "role": "Developer"
-        }
-    ],
-    "minimum-stability": "dev",
-    "autoload": {
-        "psr-4": {
-            "Bmatovu\\MultiAuth\\": "src/"
-        }
+  "name": "bmatovu/multi-auth",
+  "description": "Laravel Multi Authentication",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "package",
+    "multi",
+    "authentication"
+  ],
+  "homepage": "https://bmatovu.com/packages/multi-auth",
+  "require": {
+    "php": ">=5.6.4"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Brian Matovu",
+      "email": "mtvbrianking@gmail.com",
+      "homepage": "https://bmatovu.com",
+      "role": "Developer"
     }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "Bmatovu\\MultiAuth\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Bmatovu\\MultiAuth\\MultiAuthServiceProvider"
+      ],
+      "aliases": {
+        "MultiAuth": "Bmatovu\\MultiAuth\\MultiAuth"
+      }
+    }
+  }
 }

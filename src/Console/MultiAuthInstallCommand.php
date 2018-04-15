@@ -53,40 +53,33 @@ class MultiAuthInstallCommand extends Command
             $this->info('Using default guard: \'admin\'');
         }
 
-        /* Configurations
-
+        // Configurations
         $this->info('Loading configurations...');
 
         $this->loadConfig(__DIR__ . '/../../stubs');
 
         $this->info('Configurations loaded to ' . config_path('auth.php'));
-        */
 
-        /* Models
-
+        // Models
         $this->info('Creating Model...');
 
         $model_path = $this->loadModel(__DIR__ . '/../../stubs');
 
         $this->info('Model created at ' . $model_path);
-        */
 
-        /* Migrations
-
+        // Migrations
         $this->info('Creating Migration...');
 
         $model_path = $this->loadMigration(__DIR__ . '/../../stubs');
 
         $this->info('Migration created at ' . $model_path);
-        */
 
-        /* Controllers
+        // Controllers
         $this->info('Creating Controllers...');
 
         $controllers_path = $this->loadControllers(__DIR__ . '/../../stubs');
 
         $this->info('Controllers created at ' . $controllers_path);
-        */
 
         // Views
         $this->info('Creating Views...');
@@ -95,12 +88,40 @@ class MultiAuthInstallCommand extends Command
 
         $this->info('Views created at ' . $views_path);
 
-        // ...
+        // Routes
+        $this->info('Creating Routes...');
+
+        $routes_path = $this->loadRoutes(__DIR__ . '/../../stubs');
+
+        $this->info('Routes created at ' . $routes_path);
+
+        // Routes Service Provider
+        $this->info('Registering Routes Service Provider...');
+
+        $routes_sp_path = $this->registerRoutes(__DIR__ . '/../../stubs');
+
+        $this->info('Routes service provider registered in ' . $routes_sp_path);
+
+        // Middleware
+        $this->info('Creating Middleware...');
+
+        $middleware_path = $this->loadMiddleware(__DIR__ . '/../../stubs');
+
+        $this->info('Middleware created at ' . $middleware_path);
+
+        // Route Middleware
+        $this->info('Registering Route Middleware...');
+
+        $kernel_path = $this->registerRouteMiddleware(__DIR__ . '/../../stubs');
+
+        $this->info('Route Middleware registered in ' . $kernel_path);
+
+        // Finished...
 
         $this->info('Installation complete.');
     }
 
-    protected function get_namespace()
+    protected function getNamespace()
     {
         $namespace = Container::getInstance()->getNamespace();
         return rtrim($namespace, '\\');
@@ -131,7 +152,7 @@ class MultiAuthInstallCommand extends Command
 
             $data_map = $this->parseName();
 
-            $data_map['{{namespace}}'] = $this->get_namespace();
+            $data_map['{{namespace}}'] = $this->getNamespace();
 
             /********** Guards **********/
 
@@ -182,12 +203,11 @@ class MultiAuthInstallCommand extends Command
 
             $data_map = $this->parseName();
 
-            $data_map['{{namespace}}'] = $this->get_namespace();
+            $data_map['{{namespace}}'] = $this->getNamespace();
 
             $model = strtr($stub, $data_map);
 
-//            $model_path = app_path() . '/' . $data_map['{{pluralClass}}'] . '.php';
-            $model_path = app_path($data_map['{{pluralClass}}'] . '.php');
+            $model_path = app_path($data_map['{{singularClass}}'] . '.php');
 
             file_put_contents($model_path, $model);
 
@@ -206,7 +226,9 @@ class MultiAuthInstallCommand extends Command
 
             $data_map = $this->parseName();
 
-            $data_map['{{namespace}}'] = $this->get_namespace();
+            $data_map['{{namespace}}'] = $this->getNamespace();
+
+            $data_map['{{pluralSlug}}'] = str_plural(str_slug($this->name, '_'));
 
             $migration = strtr($stub, $data_map);
 
@@ -227,7 +249,9 @@ class MultiAuthInstallCommand extends Command
     {
         $data_map = $this->parseName();
 
-        $data_map['{{namespace}}'] = $this->get_namespace();
+        $data_map['{{namespace}}'] = $this->getNamespace();
+
+        $data_map['{{pluralSlug}}'] = str_plural(str_slug($this->name, '_'));
 
         $guard = $data_map['{{singularClass}}'];
 
@@ -275,11 +299,13 @@ class MultiAuthInstallCommand extends Command
     {
         $data_map = $this->parseName();
 
-        $data_map['{{namespace}}'] = $this->get_namespace();
+        $data_map['{{namespace}}'] = $this->getNamespace();
 
-        $guard = $data_map['{{pluralSnake}}'];
+        $guard = $data_map['{{singularSlug}}'];
 
-        $views_path = resource_path('views/vendor/multi-auth/' . $guard);
+//        $views_path = resource_path('views/vendor/multi-auth/' . $guard);
+
+        $views_path = resource_path('views/' . $guard);
 
         $views = array(
             [
@@ -323,19 +349,130 @@ class MultiAuthInstallCommand extends Command
         return $views_path;
     }
 
-    protected function loadMiddleware()
+    protected function loadRoutes($stub_path)
     {
+        $data_map = $this->parseName();
 
+        $guard = $data_map['{{singularSlug}}'];
+
+        $routes_path = base_path('/routes/' . $guard . '.php');
+
+        $routes = array(
+            'stub' => $stub_path . '/routes/routes.stub',
+            'path' => $routes_path,
+        );
+
+        $stub = file_get_contents($routes['stub']);
+        $complied = strtr($stub, $data_map);
+
+        file_put_contents($routes['path'], $complied);
+
+        return $routes_path;
     }
 
-    protected function registerMiddleware()
+    protected function registerRoutes($stub_path)
     {
+        try {
 
+            $provider_path = app_path('Providers/RouteServiceProvider.php');
+
+            $provider = file_get_contents($provider_path);
+
+            $data_map = $this->parseName();
+
+            $data_map['{{namespace}}'] = $this->getNamespace();
+
+            /********** Function **********/
+
+            $map = file_get_contents($stub_path . '/routes/map.stub');
+
+            $map = strtr($map, $data_map);
+
+            $map_bait = "    /**\n" . '     * Define the "web" routes for the application.';
+
+            $provider = str_replace($map_bait, $map . $map_bait, $provider);
+
+            /********** Function Call **********/
+
+            $map_call = file_get_contents($stub_path . '/routes/map_call.stub');
+
+            $map_call = strtr($map_call, $data_map);
+
+            $map_call_bait = '$this->mapWebRoutes();';
+
+            $provider = str_replace($map_call_bait, $map_call_bait . $map_call, $provider);
+
+            // Overwrite config file
+            file_put_contents($provider_path, $provider);
+
+            return $provider_path;
+
+        } catch (Exception $ex) {
+            throw new \RuntimeException($ex->getMessage());
+        }
     }
 
-    protected function registerRoutes()
+    protected function loadMiddleware($stub_path)
     {
+        try {
 
+            $data_map = $this->parseName();
+
+            $data_map['{{namespace}}'] = $this->getNamespace();
+
+            $middleware_path = app_path('Http/Middleware');
+
+            // ...
+
+            $stub = file_get_contents($stub_path . '/Middleware/RedirectIfAuthenticated.stub');
+
+            $guest_middleware = strtr($stub, $data_map);
+
+            file_put_contents($middleware_path . '/RedirectIf' . $data_map['{{singularClass}}'] . '.php', $guest_middleware);
+
+            // ...
+
+            $stub = file_get_contents($stub_path . '/Middleware/RedirectIfNotAuthenticated.stub');
+
+            $middleware = strtr($stub, $data_map);
+
+            file_put_contents($middleware_path . '/RedirectIfNot' . $data_map['{{singularClass}}'] . '.php', $middleware);
+
+            return $middleware_path;
+
+        } catch (Exception $ex) {
+            throw new \RuntimeException($ex->getMessage());
+        }
+    }
+
+    protected function registerRouteMiddleware($stub_path)
+    {
+        try {
+
+            $data_map = $this->parseName();
+
+            $kernel_path = app_path('Http/Kernel.php');
+
+            $kernel = file_get_contents($kernel_path);
+
+            /********** Route Middleware **********/
+
+            $route_mw = file_get_contents($stub_path . '/Middleware/Kernel.stub');
+
+            $route_mw = strtr($route_mw, $data_map);
+
+            $route_mw_bait = 'protected $routeMiddleware = [';
+
+            $kernel = str_replace($route_mw_bait, $route_mw_bait . $route_mw, $kernel);
+
+            // Overwrite config file
+            file_put_contents($kernel_path, $kernel);
+
+            return $kernel_path;
+
+        } catch (Exception $ex) {
+            throw new \RuntimeException($ex->getMessage());
+        }
     }
 
 }

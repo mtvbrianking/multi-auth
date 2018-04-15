@@ -10,7 +10,7 @@ A HomeController will also be generated to handle post-login requests from your 
 ```
 'providers' => array(
     // ...
-   Bmatovu\MultiAuth\Providers\MultiAuthServiceProvider::class,
+   Bmatovu\MultiAuth\MultiAuthServiceProvider::class,
 ),
 ```
 
@@ -22,14 +22,12 @@ A HomeController will also be generated to handle post-login requests from your 
 ],
 ```
 
-### Publish Configurations
+### Install Package
 ```
-$ php artisan vendor:publish \
-    --provider="Bmatovu\MultiAuth\Providers\MultiAuthServiceProvider" \
-    --tag=config
+$ php artisan multi-auth:install
 ```
 
-If you so wish; you may publish `migrations` and `views` to your project as well.
+This command will scaffold configurations, controllers, middleware, migrations, models, routes, and views; to get you started.
 
 ### Run Database Migrations
 `$ php artisan migrate`

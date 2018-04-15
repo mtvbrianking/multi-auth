@@ -1,12 +1,13 @@
 <?php
 
-namespace {{namespace}}\Http\Middleware\;
+namespace {{namespace}}\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
 class RedirectIfNot{{singularClass}}
 {
+
     /**
      * Handle an incoming request.
      *
@@ -18,8 +19,7 @@ class RedirectIfNot{{singularClass}}
     public function handle($request, Closure $next, $guard = '{{singularSnake}}')
     {
         if (!Auth::guard($guard)->check()) {
-            return redirect($guard.'/login');
-            // OR return redirect('{{singularSlug}}/login');
+            return redirect('{{singularSlug}}/login');
         }
 
         return $next($request);

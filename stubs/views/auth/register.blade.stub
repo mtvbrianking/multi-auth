@@ -1,4 +1,4 @@
-@extends('multi-auth::{{singularSlug}}.layouts.app')
+@extends('{{singularSlug}}.layouts.app')
 
 @section('content')
 <div class="container">
