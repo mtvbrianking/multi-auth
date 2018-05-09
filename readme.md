@@ -1,7 +1,9 @@
 ## Laravel Multi-Authentication Package
-This package simplifies multi authentication for your Laravel project. It builds on the default [Laravel authentiaction](https://laravel.com/docs/5.6/authentication) to keep things as familair.
+This package simplifies multi authentication for your Laravel project. It builds on the default [Laravel authentication](https://laravel.com/docs/5.6/authentication) to keep things familiar.
 
-In brief; the package will scaffold all the files you need for creating a custom [**guard**](https://laravel.com/docs/5.6/authentication#adding-custom-guards), along with setting up its authentication.
+In brief; the package will scaffold all the files you need for creating a custom [**guard**](https://laravel.com/docs/5.6/authentication#adding-custom-guards), as well as setting it up for authentication.
+
+**Supports:** Laravel versions 5.3, 5.4, 5.5, 5.6
 
 ### Installation
 Since this pacakge builds on default laravel authentication; make sure you've set it up first. [**_Ref_**](https://laravel.com/docs/5.6/authentication)
@@ -9,6 +11,8 @@ Since this pacakge builds on default laravel authentication; make sure you've se
 `$ composer require bmatovu/multi-auth`
 
 ### Register Service Provider 
+Only for Laravel versions 5.3 and 5.4. For v5.5 and above; this package's service provider and facade alias will be discovered automatically upon installation.
+
 In `config/app.php`
 ```
 'providers' => array(
@@ -17,7 +21,7 @@ In `config/app.php`
 ),
 ```
 
-### Register Alias 
+**Register Alias** 
 In `config/app.php`
 ```
 'aliases' => [
@@ -32,26 +36,27 @@ In `config/app.php`
 Default guard is named: `admin` be sure to use a name that suits your needs.
 This command will scaffold configurations, controllers, middleware, migrations, models, routes, and views; to get you started.
 
-See a list of files created, or affected the [files.md](https://github.com/mtvbrianking/multi-auth/blob/master/files.md)
+See a list of files created, or affected at [files.md](https://github.com/mtvbrianking/multi-auth/blob/master/files.md)
 
 ### Run Database Migrations
 `$ php artisan migrate`
 
-### Testing...
+### Usage
 `http://127.0.0.1:8000/{guard}`
 
 ### Extras:
-**Check Routes:** `php artisan route:list`
+**Check routes:** to find out which new routes have been created for your guard
+`php artisan route:list`
 
 <hr/>
 
 I Need help!
 ---
-Feel free to open an issue on [Github](https://github.com/mtvbrianking/multi-auth/issues/new). Please be as specific as possible if you want to get help.
+Feel free to [open an issue on Github](https://github.com/mtvbrianking/multi-auth/issues/new). Please be as specific as possible if you want to get help.
 
 Reporting bugs
 --
-If you've stumbled across a bug, please help us out by reporting the bug you have found by leaving as much information about the bug as possible, e.g.
+If you've stumbled across a bug, please help us out by leaving as much information about the bug as possible, e.g.
 - Steps to reproduce
 - Expected result
 - Actual result

@@ -40,7 +40,7 @@ Here is a list of files created or affected by this package;
 
 `app/Http/Kernel.php`
 
-[**\***] => Edited existing files...
+(**\***) Updated existing files...
 
 **Uninstalling**:
 

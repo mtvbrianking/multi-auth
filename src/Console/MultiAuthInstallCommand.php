@@ -18,7 +18,7 @@ class MultiAuthInstallCommand extends Command
      * @var string
      */
     protected $signature = 'multi-auth:install
-                                {name=admin : Name of the guard}
+                                {name=admin : Name of the guard. Default: \'admin\'}
                                 {--f|force : Whether to override existing files}';
 
     /**
@@ -30,8 +30,6 @@ class MultiAuthInstallCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -47,18 +45,30 @@ class MultiAuthInstallCommand extends Command
     {
         $this->info('Initiating...');
 
+        $progress = $this->output->createProgressBar(9);
+
         $this->name = $this->argument('name');
 
         if ($this->name == 'admin') {
-            $this->info('Using default guard: \'admin\'');
+            $this->info("Registering default guard: 'admin'");
+        } else {
+            $this->info("Registering guard: 'admin'");
         }
 
+        // Check if guard is already registered
+        if (array_key_exists(str_slug($this->name), config('auth.guards')))
+            throw new \RuntimeException("Guard: '" . $this->name . "' is already registered");
+
+        $progress->advance();
+
         // Configurations
-        $this->info('Loading configurations...');
+        $this->info('Registering configurations...');
 
-        $this->loadConfig(__DIR__ . '/../../stubs');
+        $this->registerConfigurations(__DIR__ . '/../../stubs');
 
-        $this->info('Configurations loaded to ' . config_path('auth.php'));
+        $this->info('Configurations registered in ' . config_path('auth.php'));
+
+        $progress->advance();
 
         // Models
         $this->info('Creating Model...');
@@ -67,12 +77,16 @@ class MultiAuthInstallCommand extends Command
 
         $this->info('Model created at ' . $model_path);
 
+        $progress->advance();
+
         // Migrations
         $this->info('Creating Migration...');
 
         $model_path = $this->loadMigration(__DIR__ . '/../../stubs');
 
         $this->info('Migration created at ' . $model_path);
+
+        $progress->advance();
 
         // Controllers
         $this->info('Creating Controllers...');
@@ -81,12 +95,16 @@ class MultiAuthInstallCommand extends Command
 
         $this->info('Controllers created at ' . $controllers_path);
 
+        $progress->advance();
+
         // Views
         $this->info('Creating Views...');
 
         $views_path = $this->loadViews(__DIR__ . '/../../stubs');
 
         $this->info('Views created at ' . $views_path);
+
+        $progress->advance();
 
         // Routes
         $this->info('Creating Routes...');
@@ -95,12 +113,16 @@ class MultiAuthInstallCommand extends Command
 
         $this->info('Routes created at ' . $routes_path);
 
+        $progress->advance();
+
         // Routes Service Provider
         $this->info('Registering Routes Service Provider...');
 
         $routes_sp_path = $this->registerRoutes(__DIR__ . '/../../stubs');
 
-        $this->info('Routes service provider registered in ' . $routes_sp_path);
+        $this->info('Routes registered in service provider: ' . $routes_sp_path);
+
+        $progress->advance();
 
         // Middleware
         $this->info('Creating Middleware...');
@@ -109,24 +131,37 @@ class MultiAuthInstallCommand extends Command
 
         $this->info('Middleware created at ' . $middleware_path);
 
+        $progress->advance();
+
         // Route Middleware
-        $this->info('Registering Route Middleware...');
+        $this->info('Registering route middleware...');
 
         $kernel_path = $this->registerRouteMiddleware(__DIR__ . '/../../stubs');
 
-        $this->info('Route Middleware registered in ' . $kernel_path);
+        $this->info('Route middleware registered in ' . $kernel_path);
 
-        // Finished...
+        $progress->finish();
 
         $this->info('Installation complete.');
     }
 
+    /**
+     * Get project namespace
+     * Default: App
+     * @return string
+     */
     protected function getNamespace()
     {
         $namespace = Container::getInstance()->getNamespace();
         return rtrim($namespace, '\\');
     }
 
+    /**
+     * Parse guard name
+     * Get the guard name in different cases
+     * @param string $name
+     * @return array
+     */
     protected function parseName($name = null)
     {
         if (!$name)
@@ -144,7 +179,12 @@ class MultiAuthInstallCommand extends Command
         );
     }
 
-    protected function loadConfig($stub_path)
+    /**
+     * Register configurations
+     * Add guard configurations to config/auth.php
+     * @param $stub_path
+     */
+    protected function registerConfigurations($stub_path)
     {
         try {
 
@@ -195,6 +235,11 @@ class MultiAuthInstallCommand extends Command
         }
     }
 
+    /**
+     * Load model
+     * @param $stub_path
+     * @return string
+     */
     protected function loadModel($stub_path)
     {
         try {
@@ -218,6 +263,11 @@ class MultiAuthInstallCommand extends Command
         }
     }
 
+    /**
+     * Load migration
+     * @param $stub_path
+     * @return string
+     */
     protected function loadMigration($stub_path)
     {
         try {
@@ -245,6 +295,11 @@ class MultiAuthInstallCommand extends Command
         }
     }
 
+    /**
+     * Load controllers
+     * @param $stub_path
+     * @return string
+     */
     protected function loadControllers($stub_path)
     {
         $data_map = $this->parseName();
@@ -295,6 +350,11 @@ class MultiAuthInstallCommand extends Command
         return $controllers_path;
     }
 
+    /**
+     * Load views
+     * @param $stub_path
+     * @return string
+     */
     protected function loadViews($stub_path)
     {
         $data_map = $this->parseName();
@@ -302,8 +362,6 @@ class MultiAuthInstallCommand extends Command
         $data_map['{{namespace}}'] = $this->getNamespace();
 
         $guard = $data_map['{{singularSlug}}'];
-
-//        $views_path = resource_path('views/vendor/multi-auth/' . $guard);
 
         $views_path = resource_path('views/' . $guard);
 
@@ -349,6 +407,11 @@ class MultiAuthInstallCommand extends Command
         return $views_path;
     }
 
+    /**
+     * Load routes
+     * @param $stub_path
+     * @return string
+     */
     protected function loadRoutes($stub_path)
     {
         $data_map = $this->parseName();
@@ -370,6 +433,11 @@ class MultiAuthInstallCommand extends Command
         return $routes_path;
     }
 
+    /**
+     * Register routes
+     * @param $stub_path
+     * @return string
+     */
     protected function registerRoutes($stub_path)
     {
         try {
@@ -412,6 +480,11 @@ class MultiAuthInstallCommand extends Command
         }
     }
 
+    /**
+     * Load middleware
+     * @param $stub_path
+     * @return string
+     */
     protected function loadMiddleware($stub_path)
     {
         try {
@@ -445,6 +518,11 @@ class MultiAuthInstallCommand extends Command
         }
     }
 
+    /**
+     * Register middleware
+     * @param $stub_path
+     * @return string
+     */
     protected function registerRouteMiddleware($stub_path)
     {
         try {
