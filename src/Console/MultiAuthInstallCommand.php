@@ -12,6 +12,8 @@ class MultiAuthInstallCommand extends Command
 
     protected $name = '';
 
+    protected $exits = false;
+
     protected $override = false;
 
     /**
@@ -55,11 +57,15 @@ class MultiAuthInstallCommand extends Command
 
         // Check if guard is already registered
         if (array_key_exists(str_slug($this->name), config('auth.guards'))) {
+            // Guard exists
+            $this->exits = true;
+
             if (!$this->option('force')) {
                 $this->info("Guard: '" . $this->name . "' is already registered");
                 if (!$this->confirm('Force override resources...?')) {
                     throw new \RuntimeException("Halting installation, choose another guard name...");
                 }
+                // Override resources
                 $this->override = true;
             }
         }
@@ -71,7 +77,7 @@ class MultiAuthInstallCommand extends Command
         // Configurations
         $this->info(PHP_EOL . 'Registering configurations...');
 
-        if (!$this->override) {
+        if ($this->exits && $this->override) {
             $this->info('Configurations registration skipped');
         } else {
             $this->registerConfigurations(__DIR__ . '/../../stubs');
@@ -92,7 +98,7 @@ class MultiAuthInstallCommand extends Command
         // Migrations
         $this->info(PHP_EOL . 'Creating Migration...');
 
-        if ($this->override) {
+        if ($this->exits && $this->override) {
             $this->info('Migration creation skipped');
         } else {
             $model_path = $this->loadMigration(__DIR__ . '/../../stubs');
@@ -131,7 +137,7 @@ class MultiAuthInstallCommand extends Command
         // Routes Service Provider
         $this->info(PHP_EOL . 'Registering Routes Service Provider...');
 
-        if ($this->override) {
+        if ($this->exits && $this->override) {
             $this->info('Routes service provider registration skipped');
         } else {
             $routes_sp_path = $this->registerRoutes(__DIR__ . '/../../stubs');
@@ -152,7 +158,7 @@ class MultiAuthInstallCommand extends Command
         // Route Middleware
         $this->info(PHP_EOL . 'Registering route middleware...');
 
-        if ($this->override) {
+        if ($this->exits && $this->override) {
             $this->info('Route middleware registration skipped');
         } else {
             $kernel_path = $this->registerRouteMiddleware(__DIR__ . '/../../stubs');
@@ -162,6 +168,8 @@ class MultiAuthInstallCommand extends Command
         $progress->finish();
 
         $this->info(PHP_EOL . 'Installation complete.');
+
+//        $this->info('All is set; http://127.0.0.1:8000/' . str_singular(str_slug($this->name)));
     }
 
     /**
@@ -471,7 +479,14 @@ class MultiAuthInstallCommand extends Command
 
             /********** Function **********/
 
-            $map = file_get_contents($stub_path . '/routes/map.stub');
+            $stub = $stub_path . '/routes/map.stub';
+
+            // If laravel version 5.3
+            if (substr(app()->version(), 0, 3) == "5.3") {
+                $stub = $stub_path . '/routes/map5.3.stub';
+            }
+
+            $map = file_get_contents($stub);
 
             $map = strtr($map, $data_map);
 
