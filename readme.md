@@ -30,6 +30,9 @@ In `config/app.php`
 ],
 ```
 
+If you've cached your configurations, you need to run;
+`$ php artisan config:cache`
+
 ### Install Package
 `$ php artisan multi-auth:install {guard}`
 
@@ -45,8 +48,15 @@ See a list of files created, or affected at [files.md](https://github.com/mtvbri
 `http://127.0.0.1:8000/{guard}`
 
 ### Extras:
+**Check guards:**
+```
+$ php artisan tinker
+Psy Shell v0.8.18 (PHP 7.0.6 ?Çö cli) by Justin Hileman
+>>> config('auth.guards');
+```
+
 **Check routes:** to find out which new routes have been created for your guard
-`php artisan route:list`
+`$ php artisan route:list`
 
 <hr/>
 

@@ -12,6 +12,8 @@ class MultiAuthInstallCommand extends Command
 
     protected $name = '';
 
+    protected $override = false;
+
     /**
      * The name and signature of the console command.
      *
@@ -45,33 +47,41 @@ class MultiAuthInstallCommand extends Command
     {
         $this->info('Initiating...');
 
-        $progress = $this->output->createProgressBar(9);
+        $progress = $this->output->createProgressBar(10);
 
         $this->name = $this->argument('name');
 
-        if ($this->name == 'admin') {
-            $this->info("Registering default guard: 'admin'");
-        } else {
-            $this->info("Registering guard: 'admin'");
-        }
+        $this->override = $this->option('force') ? true : false;
 
         // Check if guard is already registered
-        if (array_key_exists(str_slug($this->name), config('auth.guards')))
-            throw new \RuntimeException("Guard: '" . $this->name . "' is already registered");
+        if (array_key_exists(str_slug($this->name), config('auth.guards'))) {
+            if (!$this->option('force')) {
+                $this->info("Guard: '" . $this->name . "' is already registered");
+                if (!$this->confirm('Force override resources...?')) {
+                    throw new \RuntimeException("Halting installation, choose another guard name...");
+                }
+                $this->override = true;
+            }
+        }
+
+        $this->info("Using guard: '" . $this->name . "'");
 
         $progress->advance();
 
         // Configurations
-        $this->info('Registering configurations...');
+        $this->info(PHP_EOL . 'Registering configurations...');
 
-        $this->registerConfigurations(__DIR__ . '/../../stubs');
-
-        $this->info('Configurations registered in ' . config_path('auth.php'));
+        if (!$this->override) {
+            $this->info('Configurations registration skipped');
+        } else {
+            $this->registerConfigurations(__DIR__ . '/../../stubs');
+            $this->info('Configurations registered in ' . config_path('auth.php'));
+        }
 
         $progress->advance();
 
         // Models
-        $this->info('Creating Model...');
+        $this->info(PHP_EOL . 'Creating Model...');
 
         $model_path = $this->loadModel(__DIR__ . '/../../stubs');
 
@@ -80,16 +90,19 @@ class MultiAuthInstallCommand extends Command
         $progress->advance();
 
         // Migrations
-        $this->info('Creating Migration...');
+        $this->info(PHP_EOL . 'Creating Migration...');
 
-        $model_path = $this->loadMigration(__DIR__ . '/../../stubs');
-
-        $this->info('Migration created at ' . $model_path);
+        if ($this->override) {
+            $this->info('Migration creation skipped');
+        } else {
+            $model_path = $this->loadMigration(__DIR__ . '/../../stubs');
+            $this->info('Migration created at ' . $model_path);
+        }
 
         $progress->advance();
 
         // Controllers
-        $this->info('Creating Controllers...');
+        $this->info(PHP_EOL . 'Creating Controllers...');
 
         $controllers_path = $this->loadControllers(__DIR__ . '/../../stubs');
 
@@ -98,7 +111,7 @@ class MultiAuthInstallCommand extends Command
         $progress->advance();
 
         // Views
-        $this->info('Creating Views...');
+        $this->info(PHP_EOL . 'Creating Views...');
 
         $views_path = $this->loadViews(__DIR__ . '/../../stubs');
 
@@ -107,7 +120,7 @@ class MultiAuthInstallCommand extends Command
         $progress->advance();
 
         // Routes
-        $this->info('Creating Routes...');
+        $this->info(PHP_EOL . 'Creating Routes...');
 
         $routes_path = $this->loadRoutes(__DIR__ . '/../../stubs');
 
@@ -116,16 +129,19 @@ class MultiAuthInstallCommand extends Command
         $progress->advance();
 
         // Routes Service Provider
-        $this->info('Registering Routes Service Provider...');
+        $this->info(PHP_EOL . 'Registering Routes Service Provider...');
 
-        $routes_sp_path = $this->registerRoutes(__DIR__ . '/../../stubs');
-
-        $this->info('Routes registered in service provider: ' . $routes_sp_path);
+        if ($this->override) {
+            $this->info('Routes service provider registration skipped');
+        } else {
+            $routes_sp_path = $this->registerRoutes(__DIR__ . '/../../stubs');
+            $this->info('Routes registered in service provider: ' . $routes_sp_path);
+        }
 
         $progress->advance();
 
         // Middleware
-        $this->info('Creating Middleware...');
+        $this->info(PHP_EOL . 'Creating Middleware...');
 
         $middleware_path = $this->loadMiddleware(__DIR__ . '/../../stubs');
 
@@ -134,15 +150,18 @@ class MultiAuthInstallCommand extends Command
         $progress->advance();
 
         // Route Middleware
-        $this->info('Registering route middleware...');
+        $this->info(PHP_EOL . 'Registering route middleware...');
 
-        $kernel_path = $this->registerRouteMiddleware(__DIR__ . '/../../stubs');
-
-        $this->info('Route middleware registered in ' . $kernel_path);
+        if ($this->override) {
+            $this->info('Route middleware registration skipped');
+        } else {
+            $kernel_path = $this->registerRouteMiddleware(__DIR__ . '/../../stubs');
+            $this->info('Route middleware registered in ' . $kernel_path);
+        }
 
         $progress->finish();
 
-        $this->info('Installation complete.');
+        $this->info(PHP_EOL . 'Installation complete.');
     }
 
     /**
