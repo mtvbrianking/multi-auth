@@ -1,4 +1,9 @@
 ## Laravel Multi-Authentication Package
+
+[![Total Downloads](https://poser.pugx.org/bmatovu/multi-auth/downloads)](https://packagist.org/packages/bmatovu/multi-auth)
+[![Latest Stable Version](https://poser.pugx.org/bmatovu/multi-auth/v/stable)](https://packagist.org/packages/bmatovu/multi-auth)
+[![License](https://poser.pugx.org/bmatovu/multi-auth/license)](https://packagist.org/packages/bmatovu/multi-auth)
+
 This package simplifies multi authentication for your Laravel project. It builds on the default [Laravel authentication](https://laravel.com/docs/5.6/authentication) to keep things familiar.
 
 In brief; the package will scaffold all the files you need for creating a custom [**guard**](https://laravel.com/docs/5.6/authentication#adding-custom-guards), as well as setting it up for authentication.
@@ -51,7 +56,7 @@ See a list of files created, or affected at [files.md](https://github.com/mtvbri
 **Check guards:**
 ```
 $ php artisan tinker
-Psy Shell v0.8.18 (PHP 7.0.6 ?Çö cli) by Justin Hileman
+Psy Shell v0.8.18 (PHP 7.0.6 ?ï¿½ï¿½ cli) by Justin Hileman
 >>> config('auth.guards');
 ```
 
@@ -66,7 +71,7 @@ Feel free to [open an issue on Github](https://github.com/mtvbrianking/multi-aut
 
 Reporting bugs
 --
-If you've stumbled across a bug, please help us out by leaving as much information about the bug as possible, e.g.
+If you've stumbled across a bug, please help us by leaving as much information about the bug as possible, e.g.
 - Steps to reproduce
 - Expected result
 - Actual result
