@@ -56,7 +56,7 @@ See a list of files created, or affected at [files.md](https://github.com/mtvbri
 **Check guards:**
 ```
 $ php artisan tinker
-Psy Shell v0.8.18 (PHP 7.0.6 ?�� cli) by Justin Hileman
+...
 >>> config('auth.guards');
 ```
 
