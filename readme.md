@@ -11,7 +11,7 @@ In brief; the package will scaffold all the files you need for creating a custom
 **Supports:** Laravel versions 5.3, 5.4, 5.5, 5.6
 
 ### Installation
-Since this pacakge builds on default laravel authentication; make sure you've set it up first. [**_Ref_**](https://laravel.com/docs/5.6/authentication)
+Since this package builds on default laravel authentication; make sure you've set it up first. [**_Ref_**](https://laravel.com/docs/5.6/authentication)
 
 `$ composer require bmatovu/multi-auth`
 
@@ -19,7 +19,7 @@ Since this pacakge builds on default laravel authentication; make sure you've se
 Only for Laravel versions 5.3 and 5.4. For v5.5 and above; this package's service provider and facade alias will be discovered automatically upon installation.
 
 In `config/app.php`
-```
+```php
 'providers' => array(
     // ...
    Bmatovu\MultiAuth\MultiAuthServiceProvider::class,
@@ -28,7 +28,7 @@ In `config/app.php`
 
 **Register Alias** 
 In `config/app.php`
-```
+```php
 'aliases' => [
     // ...
     'MultiAuth' => Bmatovu\MultiAuth\MultiAuth::class,
@@ -54,7 +54,7 @@ See a list of files created, or affected at [files.md](https://github.com/mtvbri
 
 ### Extras:
 **Check guards:**
-```
+```php
 $ php artisan tinker
 ...
 >>> config('auth.guards');
@@ -76,4 +76,4 @@ If you've stumbled across a bug, please help us by leaving as much information a
 - Expected result
 - Actual result
 
-This will help me to fix the bug as quickly as possible, and if you'd like to fix it yourself feel free to [fork the package on GitHub](https://github.com/mtvbrianking/multi-auth) and submit a pull request!
+This will help us to fix the bug as quickly as possible, and if you wish to fix it yourself feel free to [fork the package on GitHub](https://github.com/mtvbrianking/multi-auth) and submit a pull request!
