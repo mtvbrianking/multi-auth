@@ -22,7 +22,7 @@ class MultiAuthInstallCommand extends Command
      * @var string
      */
     protected $signature = 'multi-auth:install
-                                {name=admin : Name of the guard. Default: \'admin\'}
+                                {name=admin : Name of the guard.}
                                 {--f|force : Whether to override existing files}';
 
     /**
