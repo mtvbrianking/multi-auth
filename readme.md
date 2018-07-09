@@ -38,7 +38,7 @@ In `config/app.php`
 If you've cached your configurations, you need to run;
 `$ php artisan config:cache`
 
-### Install Package
+### Bootstrapping
 `$ php artisan multi-auth:install {guard}`
 
 Default guard is named: `admin` be sure to use a name that suits your needs.
