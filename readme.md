@@ -60,7 +60,10 @@ $ php artisan tinker
 >>> config('auth.guards');
 ```
 
-**Check routes:** to find out which new routes have been created for your guard
+**Check routes:** 
+
+To find out which new routes have been created for your guard
+
 `$ php artisan route:list`
 
 <hr/>
