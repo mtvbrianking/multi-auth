@@ -49,14 +49,15 @@ class MultiAuthInstallCommand extends Command
     {
         $this->info('Initiating...');
 
-        $progress = $this->output->createProgressBar(10);
+        $progress = $this->output->createProgressBar(11);
 
         $this->name = $this->argument('name');
 
         $this->override = $this->option('force') ? true : false;
 
         // Check if guard is already registered
-        if (array_key_exists(str_slug($this->name), config('auth.guards'))) {
+        if (array_key_exists(str_singular(snake_case($this->name)), config('auth.guards'))) {
+
             // Guard exists
             $this->exits = true;
 
@@ -317,6 +318,11 @@ class MultiAuthInstallCommand extends Command
             $notification = strtr($stub, $data_map);
 
             $notification_path = app_path('/Notifications/' . $data_map['{{singularClass}}'] . '/ResetPassword.php');
+
+            $dir = dirname($notification_path);
+            if (!is_dir($dir)) {
+                mkdir($dir, 0755, true);
+            }
 
             file_put_contents($notification_path, $notification);
 
