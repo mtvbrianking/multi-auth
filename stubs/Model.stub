@@ -2,7 +2,7 @@
 
 namespace {{namespace}};
 
-use {{namespace}}\Notifications\Admin\Auth\ResetPassword;
+use {{namespace}}\Notifications\{{singularClass}}\Auth\ResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
