@@ -95,6 +95,15 @@ class MultiAuthInstallCommand extends Command
 
         $progress->advance();
 
+        // Notifications
+        $this->info(PHP_EOL . 'Creating Notification...');
+
+        $notification_path = $this->loadNotification(__DIR__ . '/../../stubs');
+
+        $this->info('Notification created at ' . $notification_path);
+
+        $progress->advance();
+
         // Migrations
         $this->info(PHP_EOL . 'Creating Migration...');
 
@@ -284,6 +293,34 @@ class MultiAuthInstallCommand extends Command
             file_put_contents($model_path, $model);
 
             return $model_path;
+
+        } catch (Exception $ex) {
+            throw new \RuntimeException($ex->getMessage());
+        }
+    }
+
+    /**
+     * Load notification
+     * @param $stub_path
+     * @return string
+     */
+    protected function loadNotification($stub_path)
+    {
+        try {
+
+            $stub = file_get_contents($stub_path . '/Notifications/ResetPassword.stub');
+
+            $data_map = $this->parseName();
+
+            $data_map['{{namespace}}'] = $this->getNamespace();
+
+            $notification = strtr($stub, $data_map);
+
+            $notification_path = app_path('/Notifications/' . $data_map['{{singularClass}}'] . '/ResetPassword.php');
+
+            file_put_contents($notification_path, $notification);
+
+            return $notification_path;
 
         } catch (Exception $ex) {
             throw new \RuntimeException($ex->getMessage());
