@@ -12,7 +12,7 @@ Here is a list of files created or affected by this package;
 
 3. Notification
 
-`app/Notifications/{guard}/ResetPassword.php`
+`app/Notifications/{guard}/Auth/ResetPassword.php`
 
 4. Configurations **\***
 

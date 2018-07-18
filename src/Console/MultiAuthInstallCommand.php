@@ -317,7 +317,7 @@ class MultiAuthInstallCommand extends Command
 
             $notification = strtr($stub, $data_map);
 
-            $notification_path = app_path('/Notifications/' . $data_map['{{singularClass}}'] . '/ResetPassword.php');
+            $notification_path = app_path('/Notifications/' . $data_map['{{singularClass}}'] . '/Auth/ResetPassword.php');
 
             $dir = dirname($notification_path);
             if (!is_dir($dir)) {
