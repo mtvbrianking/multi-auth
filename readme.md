@@ -26,15 +26,6 @@ In `config/app.php`
 ),
 ```
 
-**Register Alias** 
-In `config/app.php`
-```php
-'aliases' => [
-    // ...
-    'MultiAuth' => Bmatovu\MultiAuth\MultiAuth::class,
-],
-```
-
 If you've cached your configurations, you need to run;
 `$ php artisan config:cache`
 
