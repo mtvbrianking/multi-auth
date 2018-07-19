@@ -45,10 +45,7 @@
     "laravel": {
       "providers": [
         "Bmatovu\\MultiAuth\\MultiAuthServiceProvider"
-      ],
-      "aliases": {
-        "MultiAuth": "Bmatovu\\MultiAuth\\MultiAuth"
-      }
+      ]
     }
   }
 }
