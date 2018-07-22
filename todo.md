@@ -1,3 +1,1 @@
-**Factories**:
-
-- Add {guard} factory
+-- Awaiting user requests...

@@ -10,37 +10,41 @@ Here is a list of files created or affected by this package;
 
 `app/{guard}.php`
 
-3. Notification
+3. Factory
+
+`database/factories/{guard}Factory.php`
+
+4. Notification
 
 `app/Notifications/{guard}/Auth/ResetPassword.php`
 
-4. Configurations **\***
+5. Configurations **\***
 
 `config/auth.php`
 
-5. Controllers
+6. Controllers
 
 `app/Http/Controllers/{guard}/...`
 
-6. Views
+7. Views
 
 `resources/views/{guard}/...`
 
-7. Routes
+8. Routes
 
 `routes/{guard}.php`
 
-8. Route Service Provider **\***
+9. Route Service Provider **\***
 
 `app/Providers/RouteServiceProvider.php`
 
-9. Middleware
+10. Middleware
 
 `app/Http/Middleware/RedirectIf{guard}.php`
 
 `app/Http/Middleware/RedirectIfNot{guard}.php`
 
-10. Route Middleware **\***
+11. Route Middleware **\***
 
 `app/Http/Kernel.php`
 
