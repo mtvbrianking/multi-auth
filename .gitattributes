@@ -2,3 +2,4 @@
 /phpunit.xml.dist export-ignore
 /.travis.yml export-ignore
 /.gitattributes export-ignore
+/todo.md export-ignore

@@ -49,7 +49,7 @@ class MultiAuthInstallCommand extends Command
     {
         $this->info('Initiating...');
 
-        $progress = $this->output->createProgressBar(11);
+        $progress = $this->output->createProgressBar(12);
 
         $this->name = $this->argument('name');
 
@@ -93,6 +93,15 @@ class MultiAuthInstallCommand extends Command
         $model_path = $this->loadModel(__DIR__ . '/../../stubs');
 
         $this->info('Model created at ' . $model_path);
+
+        $progress->advance();
+
+        // Factories
+        $this->info(PHP_EOL . 'Creating Factory...');
+
+        $factory_path = $this->loadFactory(__DIR__ . '/../../stubs');
+
+        $this->info('Factory created at ' . $factory_path);
 
         $progress->advance();
 
@@ -294,6 +303,34 @@ class MultiAuthInstallCommand extends Command
             file_put_contents($model_path, $model);
 
             return $model_path;
+
+        } catch (Exception $ex) {
+            throw new \RuntimeException($ex->getMessage());
+        }
+    }
+
+    /**
+     * Load factory
+     * @param $stub_path
+     * @return string
+     */
+    protected function loadFactory($stub_path)
+    {
+        try {
+
+            $stub = file_get_contents($stub_path . '/factory.stub');
+
+            $data_map = $this->parseName();
+
+            $data_map['{{namespace}}'] = $this->getNamespace();
+
+            $factory = strtr($stub, $data_map);
+
+            $factory_path = database_path('factories/' . $data_map['{{singularClass}}'] . 'Factory.php');
+
+            file_put_contents($factory_path, $factory);
+
+            return $factory_path;
 
         } catch (Exception $ex) {
             throw new \RuntimeException($ex->getMessage());
