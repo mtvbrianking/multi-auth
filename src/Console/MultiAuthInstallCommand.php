@@ -290,7 +290,7 @@ class MultiAuthInstallCommand extends Command
     {
         try {
 
-            $stub = file_get_contents($stub_path . '/Model.stub');
+            $stub = file_get_contents($stub_path . '/model.stub');
 
             $data_map = $this->parseName();
 
