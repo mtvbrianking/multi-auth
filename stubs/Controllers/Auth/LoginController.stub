@@ -74,7 +74,7 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/{{singularSlug}}');
+        return redirect($this->redirectTo);
     }
 
 }
