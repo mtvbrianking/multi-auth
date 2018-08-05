@@ -561,11 +561,6 @@ class MultiAuthInstallCommand extends Command
 
             $stub = $stub_path . '/routes/map.stub';
 
-            // If laravel version 5.3
-            if (substr(app()->version(), 0, 3) == "5.3") {
-                $stub = $stub_path . '/routes/map5.3.stub';
-            }
-
             $map = file_get_contents($stub);
 
             $map = strtr($map, $data_map);
