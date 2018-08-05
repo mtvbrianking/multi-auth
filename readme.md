@@ -11,9 +11,9 @@ it will scaffold all the files you need for creating a custom [**guard**](https:
 
 | Laravel version | Branch | Install                                   |
 |-----------------|--------|------------------------------------------ |
-| 5.3             | 1.x    | `composer require bmatovu/multi-auth 1.*` |
-| 5.4             | 2.x    | `composer require bmatovu/multi-auth 2.*` |
-| 5.5             | 3.x    | `composer require bmatovu/multi-auth 3.*` |
+| 5.3             | 2.x    | `composer require bmatovu/multi-auth 2.*` |
+| 5.4             | 3.x    | `composer require bmatovu/multi-auth 3.*` |
+| 5.5             | 4.x    | `composer require bmatovu/multi-auth 4.*` |
 | 5.6             | master | `composer require bmatovu/multi-auth`     |
 
 If you've cached your configurations, you need to run
