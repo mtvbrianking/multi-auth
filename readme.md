@@ -7,22 +7,14 @@
 This package simplifies multi [authentication](https://laravel.com/docs/master/authentication) for your Laravel project, 
 it will scaffold all the files you need for creating a custom [**guard**](https://laravel.com/docs/master/authentication#adding-custom-guards) as well as setting it up ready for use.
 
-**Supported:** Laravel version: 5.3, 5.4, 5.5, and 5.6
-
 ### Installation
 
-`$ composer require bmatovu/multi-auth`
-
-### Register Service Provider 
-Only for Laravel versions 5.3 and 5.4.
-
-In `config/app.php`
-```php
-'providers' => array(
-    // ...
-   Bmatovu\MultiAuth\MultiAuthServiceProvider::class,
-),
-```
+| Laravel version | Branch | Install                                   |
+|-----------------|--------|------------------------------------------ |
+| 5.3             | 1.x    | `composer require bmatovu/multi-auth 1.*` |
+| 5.4             | 2.x    | `composer require bmatovu/multi-auth 2.*` |
+| 5.5             | 3.x    | `composer require bmatovu/multi-auth 3.*` |
+| 5.6             | master | `composer require bmatovu/multi-auth`     |
 
 If you've cached your configurations, you need to run
 
