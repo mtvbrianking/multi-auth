@@ -36,7 +36,7 @@ If you've cached your configurations, you need to run
 Default guard is named: `admin` be sure to use a guard name that suits your needs.
 This command will scaffold configurations, controllers, middleware, migrations, models, factories, notifications, routes, and views; to get you started.
 
-See a full list of files created, or affected at [files.md](https://github.com/mtvbrianking/multi-auth/blob/master/files.md)
+See a full list of files created, or affected at [files.md](https://github.com/mtvbrianking/multi-auth/blob/1.x/files.md)
 
 ### Run Database Migrations
 `$ php artisan migrate`
