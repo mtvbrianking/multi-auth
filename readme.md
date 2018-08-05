@@ -7,11 +7,16 @@
 This package simplifies multi [authentication](https://laravel.com/docs/master/authentication) for your Laravel project, 
 it will scaffold all the files you need for creating a custom [**guard**](https://laravel.com/docs/master/authentication#adding-custom-guards) as well as setting it up ready for use.
 
-**Supported:** Laravel version: 5.3, 5.4, 5.5, and 5.6
-
 ### Installation
 
-`$ composer require bmatovu/multi-auth`
+| Laravel version | Branch | Install                                   |
+|-----------------|--------|------------------------------------------ |
+| 5.3             | 2.x    | `composer require bmatovu/multi-auth 2.*` |
+| 5.4             | 3.x    | `composer require bmatovu/multi-auth 3.*` |
+| 5.5             | 4.x    | `composer require bmatovu/multi-auth 4.*` |
+| 5.6             | master | `composer require bmatovu/multi-auth`     |
+
+**Note:** Branch 1.x reached EOL and is no longer supported
 
 ### Register Service Provider 
 Only for Laravel versions 5.3 and 5.4.
@@ -34,7 +39,7 @@ If you've cached your configurations, you need to run
 Default guard is named: `admin` be sure to use a guard name that suits your needs.
 This command will scaffold configurations, controllers, middleware, migrations, models, factories, notifications, routes, and views; to get you started.
 
-See a full list of files created, or affected at [files.md](https://github.com/mtvbrianking/multi-auth/blob/master/files.md)
+See a full list of files created, or affected at [files.md](https://github.com/mtvbrianking/multi-auth/blob/1.x/files.md)
 
 ### Run Database Migrations
 `$ php artisan migrate`
