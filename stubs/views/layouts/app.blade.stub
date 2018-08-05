@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
+<html lang="{{ config('app.locale', en) }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,7 +50,6 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guard('{{singularSnake}}')->guest())
-
                             <li><a href="{{ route('{{singularSlug}}.login') }}">Login</a></li>
                             <li><a href="{{ route('{{singularSlug}}.register') }}">Register</a></li>
                         @else
@@ -62,7 +61,8 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="{{ route('{{singularSlug}}.logout') }}"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
 
@@ -79,7 +79,6 @@
         </nav>
 
         @yield('content')
-
     </div>
 
     <!-- Scripts -->

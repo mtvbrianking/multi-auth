@@ -1,15 +1,5 @@
 @extends('{{singularSlug}}.layouts.app')
 
-@section('extra-css')
-    @parent
-    <style>
-        .checkbox.no_indent {
-            margin-left: 0;
-            margin-right: 20px;
-        }
-    </style>
-@endsection
-
 @section('content')
 <div class="container">
     <div class="row">
@@ -60,7 +50,10 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <button type="submit" class="btn btn-primary">
+                                    Login
+                                </button>
+
                                 <a class="btn btn-link" href="{{ route('{{singularSlug}}.password.request') }}">
                                     Forgot Your Password?
                                 </a>
