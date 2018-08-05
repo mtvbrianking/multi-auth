@@ -19,6 +19,11 @@ class HomeController extends Controller
         $this->middleware('{{singularSnake}}.auth:{{singularSnake}}');
     }
 
+    /**
+     * Show the {{singularClass}} dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index() {
         return view('{{singularSlug}}.home');
     }
