@@ -16,6 +16,16 @@ it will scaffold all the files you need for creating a custom [**guard**](https:
 | 5.5             | 4.x    | `composer require bmatovu/multi-auth 4.*` |
 | 5.6             | master | `composer require bmatovu/multi-auth`     |
 
+### Register Service Provider 
+
+In `config/app.php` (For Laravel: v5.3, v5.4)
+```php
+'providers' => array(
+    // ...
+   Bmatovu\MultiAuth\MultiAuthServiceProvider::class,
+),
+```
+
 If you've cached your configurations, you need to run
 
 `$ php artisan config:cache`
