@@ -54,6 +54,8 @@ $ php artisan tinker
 
 **Access guard instance:**
 
+Specify the guard instance you would like to use:
+
 `Auth::guard(<GUARD>)->user()` like;
  
 `Auth::guard('admin')->user()`
