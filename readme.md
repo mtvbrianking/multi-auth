@@ -52,6 +52,12 @@ $ php artisan tinker
 >>> config('auth.guards');
 ```
 
+**Access guard instance:**
+
+`Auth::guard(<GUARD>)->user()` like;
+ 
+`Auth::guard('admin')->user()`
+
 **Check routes:** 
 
 To find out which routes have been created for your guard
