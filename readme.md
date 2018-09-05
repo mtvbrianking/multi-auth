@@ -14,7 +14,8 @@ it will scaffold all the files you need for creating a custom [**guard**](https:
 | 5.3             | 2.x    | `composer require bmatovu/multi-auth 2.*` |
 | 5.4             | 3.x    | `composer require bmatovu/multi-auth 3.*` |
 | 5.5             | 4.x    | `composer require bmatovu/multi-auth 4.*` |
-| 5.6             | master | `composer require bmatovu/multi-auth`     |
+| 5.6             | 5.x    | `composer require bmatovu/multi-auth 5.*` |
+| 5.7             | master | `composer require bmatovu/multi-auth`     |
 
 ### Register Service Provider 
 
