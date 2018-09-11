@@ -115,13 +115,13 @@ class MultiAuthInstallCommand extends Command
         $progress->advance();
 
         // Migrations
-        $this->info(PHP_EOL . 'Creating Migration...');
+        $this->info(PHP_EOL . 'Creating Migrations...');
 
         if ($this->exits && $this->override) {
-            $this->info('Migration creation skipped');
+            $this->info('Migrations\' creation skipped');
         } else {
-            $model_path = $this->loadMigrations(__DIR__ . '/../../stubs');
-            $this->info('Migration created at ' . $model_path);
+            $migrations_path = $this->loadMigrations(__DIR__ . '/../../stubs');
+            $this->info('Migrations created at ' . $migrations_path);
         }
 
         $progress->advance();
