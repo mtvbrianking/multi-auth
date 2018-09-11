@@ -120,7 +120,7 @@ class MultiAuthInstallCommand extends Command
         if ($this->exits && $this->override) {
             $this->info('Migration creation skipped');
         } else {
-            $model_path = $this->loadMigration(__DIR__ . '/../../stubs');
+            $model_path = $this->loadMigrations(__DIR__ . '/../../stubs');
             $this->info('Migration created at ' . $model_path);
         }
 
@@ -371,31 +371,42 @@ class MultiAuthInstallCommand extends Command
     }
 
     /**
-     * Load migration
+     * Load migrations
      * @param $stub_path
      * @return string
      */
-    protected function loadMigration($stub_path)
+    protected function loadMigrations($stub_path)
     {
         try {
 
-            $stub = file_get_contents($stub_path . '/migration.stub');
-
             $data_map = $this->parseName();
-
-            $data_map['{{namespace}}'] = $this->getNamespace();
-
-            $data_map['{{pluralSlug}}'] = str_plural(str_slug($this->name, '_'));
-
-            $migration = strtr($stub, $data_map);
 
             $signature = date('Y_m_d_His');
 
-            $migration_path = database_path('migrations/' . $signature . '_create_' . $data_map['{{pluralSnake}}'] . '_table.php');
+            $migrations = array(
+                [
+                    'stub' => $stub_path . '/migrations/provider.stub',
+                    'path' => database_path('migrations/' . $signature . '_create_' . $data_map['{{pluralSnake}}'] . '_table.php'),
+                ],
+                [
+                    'stub' => $stub_path . '/migrations/password_resets.stub',
+                    'path' => database_path('migrations/' . $signature . '_create_' . $data_map['{{singularSnake}}'] . '_password_resets_table.php'),
+                ],
+            );
 
-            file_put_contents($migration_path, $migration);
+            foreach ($migrations as $migration) {
+                $stub = file_get_contents($migration['stub']);
+                $complied = strtr($stub, $data_map);
 
-            return $migration_path;
+                $dir = dirname($migration['path']);
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0755, true);
+                }
+
+                file_put_contents($migration['path'], $complied);
+            }
+
+            return database_path('migrations');
 
         } catch (Exception $ex) {
             throw new \RuntimeException($ex->getMessage());
