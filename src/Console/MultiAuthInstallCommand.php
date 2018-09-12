@@ -214,6 +214,7 @@ class MultiAuthInstallCommand extends Command
             $name = $this->name;
 
         return $parsed = array(
+            '{{namespace}}' => $this->getNamespace(),
             '{{pluralCamel}}' => str_plural(camel_case($name)),
             '{{pluralSlug}}' => str_plural(str_slug($name)),
             '{{pluralSnake}}' => str_plural(snake_case($name)),
@@ -237,8 +238,6 @@ class MultiAuthInstallCommand extends Command
             $auth = file_get_contents(config_path('auth.php'));
 
             $data_map = $this->parseName();
-
-            $data_map['{{namespace}}'] = $this->getNamespace();
 
             /********** Guards **********/
 
@@ -294,8 +293,6 @@ class MultiAuthInstallCommand extends Command
 
             $data_map = $this->parseName();
 
-            $data_map['{{namespace}}'] = $this->getNamespace();
-
             $model = strtr($stub, $data_map);
 
             $model_path = app_path($data_map['{{singularClass}}'] . '.php');
@@ -322,8 +319,6 @@ class MultiAuthInstallCommand extends Command
 
             $data_map = $this->parseName();
 
-            $data_map['{{namespace}}'] = $this->getNamespace();
-
             $factory = strtr($stub, $data_map);
 
             $factory_path = database_path('factories/' . $data_map['{{singularClass}}'] . 'Factory.php');
@@ -346,24 +341,34 @@ class MultiAuthInstallCommand extends Command
     {
         try {
 
-            $stub = file_get_contents($stub_path . '/Notifications/ResetPassword.stub');
-
             $data_map = $this->parseName();
 
-            $data_map['{{namespace}}'] = $this->getNamespace();
+            $notifications_path = app_path('/Notifications/' . $data_map['{{singularClass}}']);
 
-            $notification = strtr($stub, $data_map);
+            $notifications = array(
+                [
+                    'stub' => $stub_path . '/Notifications/ResetPassword.stub',
+                    'path' => $notifications_path . '/ResetPassword.php',
+                ],
+                [
+                    'stub' => $stub_path . '/Notifications/VerifyEmail.stub',
+                    'path' => $notifications_path . '/VerifyEmail.php',
+                ],
+            );
 
-            $notification_path = app_path('/Notifications/' . $data_map['{{singularClass}}'] . '/Auth/ResetPassword.php');
+            foreach ($notifications as $notification) {
+                $stub = file_get_contents($notification['stub']);
+                $complied = strtr($stub, $data_map);
 
-            $dir = dirname($notification_path);
-            if (!is_dir($dir)) {
-                mkdir($dir, 0755, true);
+                $dir = dirname($notification['path']);
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0755, true);
+                }
+
+                file_put_contents($notification['path'], $complied);
             }
 
-            file_put_contents($notification_path, $notification);
-
-            return $notification_path;
+            return $notifications_path;
 
         } catch (Exception $ex) {
             throw new \RuntimeException($ex->getMessage());
@@ -422,10 +427,6 @@ class MultiAuthInstallCommand extends Command
     {
         $data_map = $this->parseName();
 
-        $data_map['{{namespace}}'] = $this->getNamespace();
-
-        $data_map['{{pluralSlug}}'] = str_plural(str_slug($this->name, '_'));
-
         $guard = $data_map['{{singularClass}}'];
 
         $controllers_path = app_path('/Http/Controllers/' . $guard);
@@ -450,7 +451,11 @@ class MultiAuthInstallCommand extends Command
             [
                 'stub' => $stub_path . '/Controllers/Auth/ResetPasswordController.stub',
                 'path' => $controllers_path . '/Auth/ResetPasswordController.php',
-            ]
+            ],
+            [
+                'stub' => $stub_path . '/Controllers/Auth/VerificationController.stub',
+                'path' => $controllers_path . '/Auth/VerificationController.php',
+            ],
         );
 
         foreach ($controllers as $controller) {
@@ -477,8 +482,6 @@ class MultiAuthInstallCommand extends Command
     {
         $data_map = $this->parseName();
 
-        $data_map['{{namespace}}'] = $this->getNamespace();
-
         $guard = $data_map['{{singularSlug}}'];
 
         $views_path = resource_path('views/' . $guard);
@@ -499,6 +502,10 @@ class MultiAuthInstallCommand extends Command
             [
                 'stub' => $stub_path . '/views/auth/register.blade.stub',
                 'path' => $views_path . '/auth/register.blade.php',
+            ],
+            [
+                'stub' => $stub_path . '/views/auth/verify.blade.stub',
+                'path' => $views_path . '/auth/verify.blade.php',
             ],
             [
                 'stub' => $stub_path . '/views/auth/passwords/email.blade.stub',
@@ -566,8 +573,6 @@ class MultiAuthInstallCommand extends Command
 
             $data_map = $this->parseName();
 
-            $data_map['{{namespace}}'] = $this->getNamespace();
-
             /********** Function **********/
 
             $stub = $stub_path . '/routes/map.stub';
@@ -611,25 +616,27 @@ class MultiAuthInstallCommand extends Command
 
             $data_map = $this->parseName();
 
-            $data_map['{{namespace}}'] = $this->getNamespace();
-
             $middleware_path = app_path('Http/Middleware');
 
-            // ...
+            $middlewares = array(
+                [
+                    'stub' => $stub_path . '/Middleware/RedirectIfAuthenticated.stub',
+                    'path' => $middleware_path . '/RedirectIf' . $data_map['{{singularClass}}'] . '.php',
+                ],
+                [
+                    'stub' => $stub_path . '/Middleware/RedirectIfNotAuthenticated.stub',
+                    'path' => $middleware_path . '/RedirectIfNot' . $data_map['{{singularClass}}'] . '.php',
+                ],
+                [
+                    'stub' => $stub_path . '/Middleware/EnsureEmailIsVerified.stub',
+                    'path' => $middleware_path . '/Ensure' . $data_map['{{singularClass}}'] . 'EmailIsVerified.php',
+                ],
+            );
 
-            $stub = file_get_contents($stub_path . '/Middleware/RedirectIfAuthenticated.stub');
-
-            $guest_middleware = strtr($stub, $data_map);
-
-            file_put_contents($middleware_path . '/RedirectIf' . $data_map['{{singularClass}}'] . '.php', $guest_middleware);
-
-            // ...
-
-            $stub = file_get_contents($stub_path . '/Middleware/RedirectIfNotAuthenticated.stub');
-
-            $middleware = strtr($stub, $data_map);
-
-            file_put_contents($middleware_path . '/RedirectIfNot' . $data_map['{{singularClass}}'] . '.php', $middleware);
+            foreach ($middlewares as $middleware) {
+                $stub = file_get_contents($middleware['stub']);
+                file_put_contents($middleware['path'], strtr($stub, $data_map));
+            }
 
             return $middleware_path;
 

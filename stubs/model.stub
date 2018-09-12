@@ -3,6 +3,7 @@
 namespace {{namespace}};
 
 use {{namespace}}\Notifications\{{singularClass}}\Auth\ResetPassword;
+use {{namespace}}\Notifications\{{singularClass}}\Auth\VerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -37,6 +38,16 @@ class {{singularClass}} extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail);
     }
 
 }
