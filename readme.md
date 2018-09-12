@@ -67,6 +67,11 @@ To find out which routes have been created for your guard
 
 `$ php artisan route:list`
 
+**Email verification:** 
+
+You may require users to verify their email addresses before using the application. 
+Read the [wiki](https://github.com/mtvbrianking/multi-auth/wiki/Email-Verification) on how to enable this.
+
 <hr/>
 
 I Need help!
