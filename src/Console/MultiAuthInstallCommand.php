@@ -343,7 +343,7 @@ class MultiAuthInstallCommand extends Command
 
             $data_map = $this->parseName();
 
-            $notifications_path = app_path('/Notifications/' . $data_map['{{singularClass}}']);
+            $notifications_path = app_path('/Notifications/' . $data_map['{{singularClass}}'] . '/Auth');
 
             $notifications = array(
                 [
