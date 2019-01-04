@@ -56,6 +56,6 @@ Here is a list of files created or affected by this package;
 
 (**\***) Updated existing files...
 
-**Uninstalling**:
+### Uninstalling:
 
 Remove package using composer; and reverse the changes above _manually_.
