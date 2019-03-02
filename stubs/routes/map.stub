@@ -8,7 +8,7 @@
     protected function map{{singularClass}}Routes()
     {
         Route::prefix('{{singularSlug}}')
-             ->middleware(['web'])
+             ->middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/{{singularSlug}}.php'));
     }
