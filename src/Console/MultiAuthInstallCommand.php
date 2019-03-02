@@ -64,7 +64,8 @@ class MultiAuthInstallCommand extends Command
             if (!$this->option('force')) {
                 $this->info("Guard: '" . $this->name . "' is already registered");
                 if (!$this->confirm('Force override resources...?')) {
-                    throw new \RuntimeException("Halting installation, choose another guard name...");
+                    $this->info(PHP_EOL . 'Halting scaffolding, try again with a another guard name...');
+                    // throw new \RuntimeException("Halting installation, choose another guard name...");
                 }
                 // Override resources
                 $this->override = true;
@@ -187,8 +188,6 @@ class MultiAuthInstallCommand extends Command
         $progress->finish();
 
         $this->info(PHP_EOL . 'Installation complete.');
-
-//        $this->info('All is set; http://127.0.0.1:8000/' . str_singular(str_slug($this->name)));
     }
 
     /**
