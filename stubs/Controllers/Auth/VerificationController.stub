@@ -3,6 +3,7 @@
 namespace {{namespace}}\Http\Controllers\{{singularClass}}\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
@@ -63,6 +64,8 @@ class VerificationController extends Controller
     {
         if ($request->route('id') == $request->user('{{singularSlug}}')->getKey()) {
             $request->user('{{singularSlug}}')->markEmailAsVerified();
+        } else {
+            abort(Response::HTTP_FORBIDDEN);
         }
 
         return redirect($this->redirectPath());
