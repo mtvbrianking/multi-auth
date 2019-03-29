@@ -59,16 +59,20 @@ class VerificationController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function verify(Request $request)
     {
-        if ($request->route('id') == $request->user('{{singularSlug}}')->getKey()) {
-            $request->user('{{singularSlug}}')->markEmailAsVerified();
-        } else {
-            abort(Response::HTTP_FORBIDDEN);
+        if ($request->route('id') != $request->user('{{singularSlug}}')->getKey()) {
+            throw new AuthorizationException;
         }
-
-        return redirect($this->redirectPath());
+        if ($request->user('{{singularSlug}}')->hasVerifiedEmail()) {
+            return redirect($this->redirectPath());
+        }
+        if ($request->user('{{singularSlug}}')->markEmailAsVerified()) {
+            event(new Verified($request->user()));
+        }
+        return redirect($this->redirectPath())->with('verified', true);
     }
 
     /**
@@ -79,8 +83,10 @@ class VerificationController extends Controller
      */
     public function resend(Request $request)
     {
+        if ($request->user('{{singularSlug}}')->hasVerifiedEmail()) {
+            return redirect($this->redirectPath());
+        }
         $request->user('{{singularSlug}}')->sendEmailVerificationNotification();
-
         return back()->with('resent', true);
     }
 
