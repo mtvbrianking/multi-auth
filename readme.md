@@ -8,7 +8,7 @@
 This package simplifies multi [authentication](https://laravel.com/docs/master/authentication) for your Laravel project, 
 it will scaffold all the files you need for creating a custom [**guard**](https://laravel.com/docs/master/authentication#adding-custom-guards) as well as setting it up ready for use.
 
-### Installation
+### Version Compatibility
 
 | Laravel | Package | Installation                             |
 | :-----: | :----: | ----------------------------------------- |
@@ -20,9 +20,8 @@ it will scaffold all the files you need for creating a custom [**guard**](https:
 | 5.8     | 7.x    | `composer require bmatovu/multi-auth 7.*` |
 | 6.0     | master | `composer require bmatovu/multi-auth`     |
 
-### Register Service Provider 
+The service provider will be auto-discovered for Laravel 5.5 and above. Alternatively; you may manually register the service provider in your configuration `config/app.php` file:
 
-In `config/app.php` (For Laravel: v5.3, v5.4)
 ```php
 'providers' => array(
     // ...
@@ -51,9 +50,11 @@ php artisan migrate
 
 **Compile CSS and JS** (Optional)
 
-Note: _The Bootstrap and Vue scaffolding provided by Laravel as of version 6.0 is now located in the `laravel/ui` Composer package._
+_The Bootstrap and Vue scaffolding provided by Laravel as of version 6.0 is now located in the [`laravel/ui`](https://laravel.com/docs/6.0/frontend#introduction) Composer package._
 
-```
+Note: This should be done only for fresh installations.
+
+```bash
 composer require laravel/ui
 
 php artisan ui vue
@@ -98,13 +99,8 @@ php artisan route:list
 You may require users to verify their email addresses before using the application. 
 Read the [wiki](https://github.com/mtvbrianking/multi-auth/wiki/Email-Verification) on how to enable this.
 
-<hr/>
-I Need help!
----
-Feel free to [open an issue](https://github.com/mtvbrianking/multi-auth/issues/new). Please be as specific as possible if you want to get help.
+### Reporting bugs
 
-Reporting bugs
---
 If you've stumbled across a bug, please help us by leaving as much information about the bug as possible, e.g.
 - Steps to reproduce
 - Expected result
