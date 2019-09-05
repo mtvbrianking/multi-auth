@@ -1,12 +1,28 @@
 language: php
 
-php:
-  - 7.1
-  - 7.2
+cache:
+  directories:
+    - $HOME/.composer/cache/files
 
-before_script:
-  - travis_retry composer self-update
-  - travis_retry composer update --no-interaction --prefer-source
+# https://docs.travis-ci.com/user/build-stages
 
-script:
- - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+jobs:
+
+  include:
+
+    - stage: test
+
+      php: 7.2
+
+      before_script:
+        - travis_retry composer self-update
+        - travis_retry composer update --prefer-lowest --no-ansi --no-interaction --no-progress --no-scripts
+
+      script:
+        - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+# https://docs.travis-ci.com/user/notifications
+notifications:
+  email:
+    on_success: never
+    on_failure: always
