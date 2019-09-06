@@ -58,5 +58,4 @@ class {{singularClass}} extends Authenticatable
     {
         $this->notify(new VerifyEmail);
     }
-
 }

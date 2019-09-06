@@ -72,7 +72,7 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect()->route('{{singularSlug}}.login');
+        return $this->loggedOut($request) ?: redirect()->route('{{singularSlug}}.dashboard');
     }
 
 }

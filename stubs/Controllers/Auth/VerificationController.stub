@@ -5,7 +5,9 @@ namespace {{namespace}}\Http\Controllers\{{singularClass}}\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class VerificationController extends Controller
 {
@@ -63,15 +65,22 @@ class VerificationController extends Controller
      */
     public function verify(Request $request)
     {
-        if ($request->route('id') != $request->user('{{singularSlug}}')->getKey()) {
+        if (! hash_equals((string) $request->route('id'), (string) $request->user('{{singularSlug}}')->getKey())) {
             throw new AuthorizationException;
         }
+
+        if (! hash_equals((string) $request->route('hash'), sha1($request->user('{{singularSlug}}')->getEmailForVerification()))) {
+            throw new AuthorizationException;
+        }
+
         if ($request->user('{{singularSlug}}')->hasVerifiedEmail()) {
             return redirect($this->redirectPath());
         }
+
         if ($request->user('{{singularSlug}}')->markEmailAsVerified()) {
-            event(new Verified($request->user()));
+            event(new Verified($request->user('{{singularSlug}}')));
         }
+
         return redirect($this->redirectPath())->with('verified', true);
     }
 
@@ -86,7 +95,9 @@ class VerificationController extends Controller
         if ($request->user('{{singularSlug}}')->hasVerifiedEmail()) {
             return redirect($this->redirectPath());
         }
+
         $request->user('{{singularSlug}}')->sendEmailVerificationNotification();
+
         return back()->with('resent', true);
     }
 
