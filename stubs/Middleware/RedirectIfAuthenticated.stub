@@ -18,7 +18,7 @@ class RedirectIf{{singularClass}}
     public function handle($request, Closure $next, $guard = '{{singularSnake}}')
     {
         if (Auth::guard($guard)->check()) {
-            return redirect()->route('{{singularSlug}}.dashboard');
+            return redirect()->route('{{singularSlug}}.home');
         }
 
         return $next($request);

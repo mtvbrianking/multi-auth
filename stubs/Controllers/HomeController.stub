@@ -6,9 +6,6 @@ use {{namespace}}\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-
-    protected $redirectTo = '/{{singularSlug}}/login';
-
     /**
      * Create a new controller instance.
      *
@@ -27,5 +24,4 @@ class HomeController extends Controller
     public function index() {
         return view('{{singularSlug}}.home');
     }
-
 }

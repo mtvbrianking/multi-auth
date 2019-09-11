@@ -1,8 +1,8 @@
 <?php
 
 Route::group(['namespace' => '{{singularClass}}'], function() {
-
-    Route::get('/', 'HomeController@index')->name('{{singularSlug}}.dashboard');
+    // Dashboard
+    Route::get('/', 'HomeController@index')->name('{{singularSlug}}.home');
 
     // Login
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('{{singularSlug}}.login');
@@ -14,14 +14,13 @@ Route::group(['namespace' => '{{singularClass}}'], function() {
     Route::post('register', 'Auth\RegisterController@register');
 
     // Passwords
-    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('{{singularSlug}}.password.email');
-    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('{{singularSlug}}.password.request');
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('{{singularSlug}}.password.email');
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('{{singularSlug}}.password.reset');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('{{singularSlug}}.password.update');
 
     // Verify
-    Route::post('email/resend', 'Auth\VerificationController@resend')->name('{{singularSlug}}.verification.resend');
     Route::get('email/verify', 'Auth\VerificationController@show')->name('{{singularSlug}}.verification.notice');
     Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('{{singularSlug}}.verification.verify');
-
+    Route::post('email/resend', 'Auth\VerificationController@resend')->name('{{singularSlug}}.verification.resend');
 });

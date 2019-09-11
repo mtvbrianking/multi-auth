@@ -90,5 +90,4 @@ class RegisterController extends Controller
     {
         return Auth::guard('{{singularSnake}}');
     }
-
 }

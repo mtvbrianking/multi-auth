@@ -24,7 +24,7 @@ class RedirectIfNot{{singularClass}}
             return $next($request);
         }
 
-        $redirectToRoute = $request->expectsJson() ? '' : '{{singularSlug}}/login';
+        $redirectToRoute = $request->expectsJson() ? '' : route('{{singularSlug}}.login');
 
         throw new AuthenticationException(
             'Unauthenticated.', [$guard], $redirectToRoute
