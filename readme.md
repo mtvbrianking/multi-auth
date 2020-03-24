@@ -10,15 +10,16 @@ it will scaffold all the files you need for creating a custom [**guard**](https:
 
 ### Version Compatibility
 
-| Laravel | Package | Installation                             |
-| :-----: | :----: | ----------------------------------------- |
-| 5.3     | 2.x    | `composer require bmatovu/multi-auth 2.*` |
-| 5.4     | 3.x    | `composer require bmatovu/multi-auth 3.*` |
-| 5.5     | 4.x    | `composer require bmatovu/multi-auth 4.*` |
-| 5.6     | 5.x    | `composer require bmatovu/multi-auth 5.*` |
-| 5.7     | 6.x    | `composer require bmatovu/multi-auth 6.*` |
-| 5.8     | 7.x    | `composer require bmatovu/multi-auth 7.*` |
-| 6.0     | master | `composer require bmatovu/multi-auth`     |
+| Laravel | Package | Installation                              |
+| :-----: | :----: | ------------------------------------------ |
+| 5.3     | 2.x    | `composer require bmatovu/multi-auth 2.*`  |
+| 5.4     | 3.x    | `composer require bmatovu/multi-auth 3.*`  |
+| 5.5     | 4.x    | `composer require bmatovu/multi-auth 4.*`  |
+| 5.6     | 5.x    | `composer require bmatovu/multi-auth 5.*`  |
+| 5.7     | 6.x    | `composer require bmatovu/multi-auth 6.*`  |
+| 5.8     | 7.x    | `composer require bmatovu/multi-auth 7.*`  |
+| 6.0     | 8.x    | `composer require bmatovu/multi-auth ^8.0` |
+| 7.0     | master | `composer require bmatovu/multi-auth`      |
 
 The service provider will be auto-discovered for Laravel 5.5 and above. Alternatively; you may manually register the service provider in your configuration `config/app.php` file:
 
