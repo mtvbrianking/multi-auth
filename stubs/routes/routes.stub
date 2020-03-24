@@ -24,7 +24,7 @@ Route::group(['namespace' => '{{singularClass}}'], function() {
     Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
 
     // Verify Email
-    Route::get('email/verify', 'Auth\VerificationController@show')->name('{{singularSlug}}.verification.notice');
-    Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('{{singularSlug}}.verification.verify');
-    Route::post('email/resend', 'Auth\VerificationController@resend')->name('{{singularSlug}}.verification.resend');
+    // Route::get('email/verify', 'Auth\VerificationController@show')->name('{{singularSlug}}.verification.notice');
+    // Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('{{singularSlug}}.verification.verify');
+    // Route::post('email/resend', 'Auth\VerificationController@resend')->name('{{singularSlug}}.verification.resend');
 });

@@ -456,6 +456,10 @@ class MultiAuthInstallCommand extends Command
                 'stub' => $stub_path . '/Controllers/Auth/VerificationController.stub',
                 'path' => $controllers_path . '/Auth/VerificationController.php',
             ],
+            [
+                'stub' => $stub_path . '/Controllers/Auth/ConfirmPasswordController.stub',
+                'path' => $controllers_path . '/Auth/ConfirmPasswordController.php',
+            ],
         );
 
         foreach ($controllers as $controller) {
@@ -514,6 +518,10 @@ class MultiAuthInstallCommand extends Command
             [
                 'stub' => $stub_path . '/views/auth/passwords/reset.blade.stub',
                 'path' => $views_path . '/auth/passwords/reset.blade.php',
+            ],
+            [
+                'stub' => $stub_path . '/views/auth/passwords/confirm.blade.stub',
+                'path' => $views_path . '/auth/passwords/confirm.blade.php',
             ],
         );
 
