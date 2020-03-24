@@ -213,7 +213,7 @@ class MultiAuthInstallCommand extends Command
         if (!$name)
             $name = $this->name;
 
-        return $parsed = array(
+        return $parsed = [
             '{{namespace}}' => $this->getNamespace(),
             '{{pluralCamel}}' => Str::plural(Str::camel($name)),
             '{{pluralSlug}}' => Str::plural(Str::slug($name)),
@@ -223,7 +223,7 @@ class MultiAuthInstallCommand extends Command
             '{{singularSlug}}' => Str::singular(Str::slug($name)),
             '{{singularSnake}}' => Str::singular(Str::snake($name)),
             '{{singularClass}}' => Str::singular(Str::studly($name)),
-        );
+        ];
     }
 
     /**
@@ -630,6 +630,10 @@ class MultiAuthInstallCommand extends Command
                 [
                     'stub' => $stub_path . '/Middleware/EnsureEmailIsVerified.stub',
                     'path' => $middleware_path . '/Ensure' . $data_map['{{singularClass}}'] . 'EmailIsVerified.php',
+                ],
+                [
+                    'stub' => $stub_path . '/Middleware/RequirePassword.stub',
+                    'path' => $middleware_path . '/Require' . $data_map['{{singularClass}}'] . 'Password.php',
                 ],
             );
 

@@ -17,15 +17,15 @@ class VerificationController extends Controller
     |--------------------------------------------------------------------------
     |
     | This controller is responsible for handling email verification for any
-    | user that recently registered with the application. Emails may also
-    | be re-sent if the user didn't receive the original email message.
+    | {{singularSnake}} that recently registered with the application. Emails may also
+    | be re-sent if the {{singularSnake}} didn't receive the original email message.
     |
     */
 
     use VerifiesEmails;
 
     /**
-     * Where to redirect users after verification.
+     * Where to redirect {{pluralSnake}} after verification.
      *
      * @var string
      */
@@ -47,6 +47,7 @@ class VerificationController extends Controller
      * Show the email verification notice.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
@@ -61,6 +62,7 @@ class VerificationController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function verify(Request $request)
@@ -88,6 +90,7 @@ class VerificationController extends Controller
      * Resend the email verification notification.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function resend(Request $request)
