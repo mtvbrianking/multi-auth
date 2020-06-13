@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['namespace' => '{{singularClass}}', 'as' => '{{singularSlug}}'], function() {
+Route::group(['namespace' => '{{singularClass}}', 'as' => '{{singularSlug}}.'], function() {
     // Dashboard
     Route::get('/', 'HomeController@index')->name('home');
 
