@@ -40,6 +40,9 @@
             "Bmatovu\\MultiAuth\\Test\\": "tests/"
         }
     },
+    "suggest": {
+        "laravel/ui": "Scaffolding frontend resources for; Bootstrap, VueJs, or ReactJs."
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
