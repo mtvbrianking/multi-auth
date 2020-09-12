@@ -581,27 +581,15 @@ class MultiAuthInstallCommand extends Command
 
             $data_map = $this->parseName();
 
-            /********** Function **********/
+            /********** Boot **********/
 
-            $stub = $stub_path . '/routes/map.stub';
-
-            $map = file_get_contents($stub);
+            $map = file_get_contents($stub_path . '/routes/map.stub');
 
             $map = strtr($map, $data_map);
 
-            $map_bait = "    /**\n" . '     * Define the "web" routes for the application.';
+            $map_bait = "                ->group(base_path('routes/web.php'));";
 
-            $provider = str_replace($map_bait, $map . $map_bait, $provider);
-
-            /********** Function Call **********/
-
-            $map_call = file_get_contents($stub_path . '/routes/map_call.stub');
-
-            $map_call = strtr($map_call, $data_map);
-
-            $map_call_bait = '$this->mapWebRoutes();';
-
-            $provider = str_replace($map_call_bait, $map_call_bait . $map_call, $provider);
+            $provider = str_replace($map_bait, $map_bait . $map, $provider);
 
             // Overwrite config file
             file_put_contents($provider_path, $provider);
