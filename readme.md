@@ -19,7 +19,8 @@ it will scaffold all the files you need for creating a custom [**guard**](https:
 | 5.7     | 6.x    | `composer require bmatovu/multi-auth 6.*`  |
 | 5.8     | 7.x    | `composer require bmatovu/multi-auth 7.*`  |
 | 6.0     | 8.x    | `composer require bmatovu/multi-auth ^8.0` |
-| 7.0     | master | `composer require bmatovu/multi-auth`      |
+| 7.0     | 9.x    | `composer require bmatovu/multi-auth ^9.0` |
+| 8.0     | master | `composer require bmatovu/multi-auth`      |
 
 The service provider will be auto-discovered for Laravel 5.5 and above. Alternatively; you may manually register the service provider in your configuration `config/app.php` file:
 
@@ -51,7 +52,9 @@ php artisan migrate
 
 **Compile CSS and JS** (Optional)
 
-_The Bootstrap and Vue scaffolding provided by Laravel as of version 6.0 is now located in the [`laravel/ui`](https://laravel.com/docs/6.0/frontend#introduction) Composer package._
+_The Bootstrap and Vue scaffolding provided by Laravel as of version 6.0 is now located in the [`laravel/ui`](https://laravel.com/docs/7.x/frontend#introduction) Composer package._
+
+_In a new twist of events; Laravel will be dropping support for `laravel/ui` in later versions in favour of [`laravel/jetstream`](https://jetstream.laravel.com/). This package is not supporting the latter but we intend to catch up asap._
 
 Note: This should be done only for fresh installations.
 
