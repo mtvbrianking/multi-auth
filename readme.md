@@ -52,9 +52,9 @@ php artisan migrate
 
 **Compile CSS and JS** (Optional)
 
-_The Bootstrap and Vue scaffolding provided by Laravel as of version 6.0 is now located in the [`laravel/ui`](https://laravel.com/docs/7.x/frontend#introduction) Composer package._
+_The Bootstrap and Vue scaffolding provided by Laravel as of version 6.0 is now located in the [`laravel/ui`](https://laravel.com/docs/7.x/frontend) Composer package._
 
-_In a surprise twist of events; Laravel will be dropping support for `laravel/ui` in later versions in favour of [`laravel/jetstream`](https://jetstream.laravel.com/). This package is not supporting the latter but we intend to catch up ASAP._
+_Laravel 8 is moved the official **Authentication** to (`Laravel/Fortify`](https://github.com/laravel/fortify). This package is not still scaffolding auth based off the `laravel/ui` but we intend to catch up ASAP._
 
 Note: This should be done only for fresh installations.
 
