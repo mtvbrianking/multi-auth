@@ -2,7 +2,7 @@
 
 namespace {{namespace}}\Http\Controllers\{{singularClass}}\Auth;
 
-use {{namespace}}\{{singularClass}};
+use {{namespace}}\Models\{{singularClass}};
 use {{namespace}}\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -62,7 +62,7 @@ class RegisterController extends Controller
      *
      * @param array $data
      *
-     * @return \{{namespace}}\{{singularClass}}
+     * @return \{{namespace}}\Models\{{singularClass}}
      */
     protected function create(array $data)
     {
