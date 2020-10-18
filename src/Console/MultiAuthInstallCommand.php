@@ -295,7 +295,7 @@ class MultiAuthInstallCommand extends Command
 
             $model = strtr($stub, $data_map);
 
-            $model_path = app_path('Models\\' . $data_map['{{singularClass}}'] . '.php');
+            $model_path = app_path('Models/' . $data_map['{{singularClass}}'] . '.php');
 
             file_put_contents($model_path, $model);
 
