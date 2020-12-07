@@ -7,7 +7,10 @@
 
 This package simplifies multi [authentication](https://laravel.com/docs/master/authentication) for your Laravel project, 
 it will scaffold all the files you need for creating a custom [**guard**](https://laravel.com/docs/master/authentication#adding-custom-guards) as well as setting it up ready for use.
-
+### Installing
+```
+composer require bmatovu/multi-auth
+```
 ### Version Compatibility
 
 | Laravel | Package | Installation                              |
