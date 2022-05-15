@@ -19,16 +19,16 @@
         }
     ],
     "require": {
-        "php": "^7.3|^8.0",
-        "illuminate/auth": "^8.0",
-        "illuminate/console": "^8.0",
-        "illuminate/notifications": "^8.0",
-        "illuminate/routing": "^8.0",
-        "illuminate/support": "^8.0"
+        "php": "^8.0.2",
+        "illuminate/auth": "^9.0",
+        "illuminate/console": "^9.0",
+        "illuminate/notifications": "^9.0",
+        "illuminate/routing": "^9.0",
+        "illuminate/support": "^9.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.3.3"
+        "orchestra/testbench": "^7.0",
+        "phpunit/phpunit": "^9.5.10"
     },
     "autoload": {
         "psr-4": {
