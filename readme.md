@@ -10,26 +10,12 @@ it will scaffold all the files you need for creating a custom [**guard**](https:
 
 ### Version Compatibility
 
-| Laravel | Package | Installation                              |
-| :-----: | :----: | ------------------------------------------ |
-| 5.3     | 2.x    | `composer require bmatovu/multi-auth 2.*`  |
-| 5.4     | 3.x    | `composer require bmatovu/multi-auth 3.*`  |
-| 5.5     | 4.x    | `composer require bmatovu/multi-auth 4.*`  |
-| 5.6     | 5.x    | `composer require bmatovu/multi-auth 5.*`  |
-| 5.7     | 6.x    | `composer require bmatovu/multi-auth 6.*`  |
-| 5.8     | 7.x    | `composer require bmatovu/multi-auth 7.*`  |
-| 6.0     | 8.x    | `composer require bmatovu/multi-auth ^8.0` |
-| 7.0     | 9.x    | `composer require bmatovu/multi-auth ^9.0` |
-| 8.0     | master | `composer require bmatovu/multi-auth`      |
-
-The service provider will be auto-discovered for Laravel 5.5 and above. Alternatively; you may manually register the service provider in your configuration `config/app.php` file:
-
-```php
-'providers' => array(
-    // ...
-    Bmatovu\MultiAuth\MultiAuthServiceProvider::class,
-),
-```
+| Laravel | Package | Installation                               |
+| :-----: | :----: | ------------------------------------------- |
+| 6.0     | 8.x    | `composer require bmatovu/multi-auth ^8.0`  |
+| 7.0     | 9.x    | `composer require bmatovu/multi-auth ^9.0`  |
+| 8.0     | 10.x   | `composer require bmatovu/multi-auth ^10.0` |
+| 9.0     | master | `composer require bmatovu/multi-auth`       |
 
 ### Bootstrapping
 
@@ -62,6 +48,8 @@ Note: This should only be done for fresh installations.
 composer require laravel/ui
 
 php artisan ui bootstrap
+
+# php artisan ui bootstrap --auth
 
 npm install && npm run dev
 ```
