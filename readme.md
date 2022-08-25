@@ -40,7 +40,7 @@ php artisan migrate
 
 _The Bootstrap and Vue scaffolding provided by Laravel as of version 6.0 is now located in the [`laravel/ui`](https://laravel.com/docs/7.x/frontend) Composer package._
 
-_There's consideration to move aware from [`laravel/ui`](https://github.com/laravel/ui) to [`laravel/fortify`](https://github.com/laravel/breeze)_
+_There's consideration to move aware from [`laravel/ui`](https://github.com/laravel/ui) to [`laravel/breeze`](https://github.com/laravel/breeze)_
 
 Note: This should only be done for fresh installations.
 
