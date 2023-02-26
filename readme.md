@@ -53,7 +53,7 @@ See a full list of files created, or updated at [files.md](https://github.com/mt
 
 ### Possible approaches for separating user areas
 
-#### Using sub-domains
+**Using sub-domains**
 
 Separate user areas by sub-domains.
 
@@ -65,7 +65,7 @@ _I would use separate repos for each sub-domain_
 | seller.larastore.com | sellers |
 | admin.larastore.com | administrators |
 
-#### Using URLs\*
+**Using URLs\***
 
 _Separate user areas based on URLs._
 
@@ -77,7 +77,7 @@ _Separate user areas based on URLs._
 | larastore.com/seller | sellers |
 | larastore.com/admin | administrators |
 
-#### Using roles
+**Using roles**
 
 Restrict access based on the user's roles and permissions
 
