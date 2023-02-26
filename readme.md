@@ -53,30 +53,34 @@ See a full list of files created, or updated at [files.md](https://github.com/mt
 
 ### Possible approaches for separating user areas
 
-1. Using sub-domains
+#### Using sub-domains
 
-_Great approach. It may require separate repos for each user group_
+Separate user areas by sub-domains.
 
-| URI | User Group |
-| ---- | ---- |
-| lara-store.com | customers |
-| seller.lara-store.com | sellers |
-| admin.lara-store.com | administrators |
-
-2. Using guards
-
-_This is what this package offers. User areas packaged as modules in the same application_
+_I would use separate repos for each sub-domain_
 
 | URI | User Group |
 | ---- | ---- |
-| lara-store.com | customers |
-| lara-store.com/seller | sellers |
-| lara-store.com/admin | administrators |
+| larastore.com | customers |
+| seller.larastore.com | sellers |
+| admin.larastore.com | administrators |
 
-3. Using roles
+#### Using URLs\*
+
+_Separate user areas based on URLs._
+
+\* What is package offers
+
+| URI | User Group |
+| ---- | ---- |
+| larastore.com | customers |
+| larastore.com/seller | sellers |
+| larastore.com/admin | administrators |
+
+#### Using roles
 
 _Restrict access based on the user's roles and permissions_
 
 | URI | User Group |
 | ---- | ---- |
-| lara-store.com | customers, sellers, administrators |
+| larastore.com | customers, sellers, administrators |
