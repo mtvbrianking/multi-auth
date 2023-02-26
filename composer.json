@@ -1,34 +1,36 @@
 {
     "name": "bmatovu/multi-auth",
     "description": "Laravel Multi Authentication",
-    "homepage": "https://github.com/mtvbrianking/multi-auth",
     "type": "library",
     "license": "MIT",
     "keywords": [
         "laravel",
-        "package",
         "multi",
-        "authentication"
+        "auth"
     ],
+    "support": {
+        "issues": "https://github.com/mtvbrianking/multi-auth/issues",
+        "source": "https://github.com/mtvbrianking/multi-auth"
+    },
     "authors": [
         {
             "name": "Brian Matovu",
             "email": "mtvbrianking@gmail.com",
-            "homepage": "http://bmatovu.com",
-            "role": "Developer"
+            "homepage": "https://bmatovu.com",
+            "role": "Maintainer"
         }
     ],
     "require": {
-        "php": "^8.0.2",
-        "illuminate/auth": "^9.0",
-        "illuminate/console": "^9.0",
-        "illuminate/notifications": "^9.0",
-        "illuminate/routing": "^9.0",
-        "illuminate/support": "^9.0"
+        "php": "^8.1",
+        "illuminate/auth": "^10.0",
+        "illuminate/console": "^10.0",
+        "illuminate/notifications": "^10.0",
+        "illuminate/routing": "^10.0",
+        "illuminate/support": "^10.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^7.0",
-        "phpunit/phpunit": "^9.5.10"
+        "orchestra/testbench": "^8.0",
+        "phpunit/phpunit": "^10.0"
     },
     "autoload": {
         "psr-4": {
@@ -41,11 +43,14 @@
         }
     },
     "suggest": {
-        "laravel/ui": "Scaffolding frontend resources for; Bootstrap, VueJs, or ReactJs."
+        "laravel/breeze": "Min. Laravel auth scaffolding with Blade and Tailwind."
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
+        "branch-alias": {
+            "dev-master": "12.x-dev"
+        },
         "laravel": {
             "providers": [
                 "Bmatovu\\MultiAuth\\MultiAuthServiceProvider"
