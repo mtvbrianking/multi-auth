@@ -69,7 +69,7 @@ _I would use separate repos for each sub-domain_
 
 _Separate user areas based on URLs._
 
-\* What is package offers
+\* What this package offers
 
 | URI | User Group |
 | ---- | ---- |
@@ -79,7 +79,9 @@ _Separate user areas based on URLs._
 
 #### Using roles
 
-_Restrict access based on the user's roles and permissions_
+Restrict access based on the user's roles and permissions
+
+_I'd stay away from this approach as it'd more complex to maintain for large projects_
 
 | URI | User Group |
 | ---- | ---- |
