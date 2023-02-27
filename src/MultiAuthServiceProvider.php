@@ -2,12 +2,10 @@
 
 namespace Bmatovu\MultiAuth;
 
-use Bmatovu\MultiAuth\Console\MultiAuthInstallCommand;
 use Illuminate\Support\ServiceProvider;
 
 class MultiAuthServiceProvider extends ServiceProvider
 {
-
     /**
      * Bootstrap the application services.
      *
@@ -15,11 +13,13 @@ class MultiAuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                MultiAuthInstallCommand::class,
-            ]);
+        if (!$this->app->runningInConsole()) {
+            return;
         }
+
+        $this->commands([
+            Console\InstallCommand::class,
+        ]);
     }
 
     /**
@@ -32,4 +32,13 @@ class MultiAuthServiceProvider extends ServiceProvider
         // ...
     }
 
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [Console\InstallCommand::class];
+    }
 }

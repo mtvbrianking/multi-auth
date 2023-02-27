@@ -1,4 +1,4 @@
-## Laravel Multi-Authentication Package
+# Laravel Multi-Authentication Package
 
 [![Total Downloads](https://poser.pugx.org/bmatovu/multi-auth/downloads)](https://packagist.org/packages/bmatovu/multi-auth)
 [![Latest Stable Version](https://poser.pugx.org/bmatovu/multi-auth/v/stable)](https://packagist.org/packages/bmatovu/multi-auth)
@@ -9,7 +9,7 @@ This package gives you the ability to separate user areas in your application.
 
 E.g, an ecommerce application with customers, sellers, and administrators user areas using [auth guards](https://laravel.com/docs/master/authentication#adding-custom-guards)
 
-### Older versions
+## Older versions
 
 We've switched from [`laravel/ui`](https://github.com/laravel/ui) to [`laravel/breeze`](https://github.com/laravel/breeze) and adopted a modular approach.
 
@@ -17,19 +17,19 @@ Each user group will be setup in a dedicated modules dir, e.g `app/Modules/Admin
 
 For old versions (Laravel v9 and below) refer to [v11](https://github.com/mtvbrianking/multi-auth/tree/11.x)
 
-### Installation
+## Installation
 
 ```bash
 composer require bmatovu/multi-auth --dev
 ```
 
-### Scaffolding
+## Scaffolding
 
 ```bash
 php artisan multi-auth:install {guard}
 ```
 
-### Register service provider
+## Register service provider
 
 > config/app.php
 
@@ -41,19 +41,19 @@ php artisan multi-auth:install {guard}
 +         App\Modules\Admins\AdminServiceProvider::class,
       ],
 ```
-### Run Database Migrations
+## Run Database Migrations
 
 ```bash
 php artisan migrate
 ```
 
-### Changes
+## Changes
 
 See a full list of files created, or updated at [files.md](https://github.com/mtvbrianking/multi-auth/blob/master/files.md)
 
-### Possible approaches for separating user areas
+## Possible approaches for separating user areas
 
-**Using sub-domains**
+### Using sub-domains
 
 Separate user areas by sub-domains.
 
@@ -65,7 +65,7 @@ _I would use separate repos for each sub-domain_
 | seller.larastore.com | sellers |
 | admin.larastore.com | administrators |
 
-**Using URLs\***
+### Using URLs\*
 
 _Separate user areas based on URLs._
 
@@ -77,7 +77,7 @@ _Separate user areas based on URLs._
 | larastore.com/seller | sellers |
 | larastore.com/admin | administrators |
 
-**Using roles**
+### Using roles
 
 Restrict access based on the user's roles and permissions
 
