@@ -47,10 +47,6 @@ php artisan multi-auth:install {guard}
 php artisan migrate
 ```
 
-## Changes
-
-See a full list of files created, or updated at [files.md](https://github.com/mtvbrianking/multi-auth/blob/master/files.md)
-
 ## Possible approaches for separating user areas
 
 ### Using sub-domains
@@ -67,7 +63,7 @@ _I would use separate repos for each sub-domain_
 
 ### Using URLs\*
 
-_Separate user areas based on URLs._
+_Separate user areas based on URLs. Restricted with auth guards_
 
 \* What this package offers
 
