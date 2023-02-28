@@ -8,15 +8,14 @@ use Orchestra\Testbench\TestCase as Orchestra;
 abstract class TestCase extends Orchestra
 {
     /**
-     * Add package service provider
+     * Add package service provider.
      *
-     * @param $app
      * @return array
      */
     protected function getPackageProviders($app)
     {
         return [
-            MultiAuthServiceProvider::class
+            MultiAuthServiceProvider::class,
         ];
     }
 
@@ -24,7 +23,6 @@ abstract class TestCase extends Orchestra
      * Define environment setup.
      *
      * @param \Illuminate\Foundation\Application $app
-     * @return void
      */
     protected function getEnvironmentSetUp($app)
     {

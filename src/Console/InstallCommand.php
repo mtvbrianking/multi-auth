@@ -44,22 +44,22 @@ class InstallCommand extends Command
     {
         $stack = $this->option('stack');
 
-        if (!$stack) {
+        if (! $stack) {
             $stack = $this->choice('What is your stack?', $this->stacks, 0);
         }
 
-        $this->hydrateStubs(__DIR__ . '/../../stubs', $this->placeholders($this->argument('guard')));
+        $this->hydrateStubs(__DIR__.'/../../stubs', $this->placeholders($this->argument('guard')));
 
-        if ($stack === 'vue') {
+        if ('vue' === $stack) {
             // $this->installInertiaVueStack();
             $this->info('Coming soon...');
-        } elseif ($stack === 'react') {
+        } elseif ('react' === $stack) {
             // $this->installInertiaReactStack();
             $this->info('Coming soon...');
-        } elseif ($stack === 'api') {
+        } elseif ('api' === $stack) {
             // $this->installApiStack();
             $this->info('Coming soon...');
-        } elseif ($stack === 'blade') {
+        } elseif ('blade' === $stack) {
             $this->installBladeStack();
         } else {
             $this->error('Invalid stack. Supported stacks are [blade], [react], [vue], and [api].');
@@ -84,24 +84,24 @@ class InstallCommand extends Command
 
     protected function hydrateStubs(string $dirPath, array $placeholders): void
     {
-        $fs = new Filesystem;
+        $fs = new Filesystem();
 
-        $fs->deleteDirectory(dirname($dirPath) . '/.stubs');
+        $fs->deleteDirectory(\dirname($dirPath).'/.stubs');
 
         $rdi = new \RecursiveDirectoryIterator($dirPath, \FilesystemIterator::SKIP_DOTS);
 
         $rii = new \RecursiveIteratorIterator($rdi);
 
         foreach ($rii as $splFileInfo) {
-            $newPath = dirname($dirPath) . '/.stubs' . str_replace($dirPath, '', $splFileInfo->getPath());
+            $newPath = \dirname($dirPath).'/.stubs'.str_replace($dirPath, '', $splFileInfo->getPath());
 
             $fs->ensureDirectoryExists($newPath);
 
             $fileName = $splFileInfo->getFilename();
 
-            $newFilePath = $newPath . '/' . strtr($fileName, $placeholders);
+            $newFilePath = $newPath.'/'.strtr($fileName, $placeholders);
 
-            $fileContent = file_get_contents($splFileInfo->getPath() . '/' . $fileName);
+            $fileContent = file_get_contents($splFileInfo->getPath().'/'.$fileName);
 
             file_put_contents($newFilePath, strtr($fileContent, $placeholders));
         }
