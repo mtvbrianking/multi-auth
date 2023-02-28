@@ -6,6 +6,7 @@ use Bmatovu\MultiAuth\Console\Traits\InstallsBladeStack;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Symfony\Component\Finder\Finder;
 
 class InstallCommand extends Command
 {
@@ -44,11 +45,15 @@ class InstallCommand extends Command
     {
         $stack = $this->option('stack');
 
-        if (! $stack) {
+        if (!$stack) {
             $stack = $this->choice('What is your stack?', $this->stacks, 0);
         }
 
-        $this->hydrateStubs(__DIR__.'/../../stubs', $this->placeholders($this->argument('guard')));
+        $this->hydrateStubs(__DIR__ . '/../../stubs', $this->placeholders($this->argument('guard')));
+
+        if (!$this->option('dark')) {
+            $this->removeDarkClasses(__DIR__ . '/../../.stubs/*/resources/views');
+        }
 
         if ('vue' === $stack) {
             // $this->installInertiaVueStack();
@@ -86,24 +91,38 @@ class InstallCommand extends Command
     {
         $fs = new Filesystem();
 
-        $fs->deleteDirectory(\dirname($dirPath).'/.stubs');
+        $fs->deleteDirectory(\dirname($dirPath) . '/.stubs');
 
         $rdi = new \RecursiveDirectoryIterator($dirPath, \FilesystemIterator::SKIP_DOTS);
 
         $rii = new \RecursiveIteratorIterator($rdi);
 
         foreach ($rii as $splFileInfo) {
-            $newPath = \dirname($dirPath).'/.stubs'.str_replace($dirPath, '', $splFileInfo->getPath());
+            $newPath = \dirname($dirPath) . '/.stubs' . str_replace($dirPath, '', $splFileInfo->getPath());
 
             $fs->ensureDirectoryExists($newPath);
 
             $fileName = $splFileInfo->getFilename();
 
-            $newFilePath = $newPath.'/'.strtr($fileName, $placeholders);
+            $newFilePath = $newPath . '/' . strtr($fileName, $placeholders);
 
-            $fileContent = file_get_contents($splFileInfo->getPath().'/'.$fileName);
+            $fileContent = file_get_contents($splFileInfo->getPath() . '/' . $fileName);
 
             file_put_contents($newFilePath, strtr($fileContent, $placeholders));
+        }
+    }
+
+    /**
+     * Remove Tailwind dark classes from the given files.
+     */
+    protected function removeDarkClasses(string $dirPath): void
+    {
+        $finder = (new Finder)
+            ->in($dirPath)
+            ->name('*.blade.php');
+
+        foreach ($finder as $file) {
+            file_put_contents($file->getPathname(), preg_replace('/\sdark:[^\s"\']+/', '', $file->getContents()));
         }
     }
 }
