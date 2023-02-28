@@ -10,6 +10,8 @@ abstract class TestCase extends Orchestra
     /**
      * Add package service provider.
      *
+     * @param mixed $app
+     *
      * @return array
      */
     protected function getPackageProviders($app)
