@@ -3,17 +3,17 @@
 use App\Modules\{{pluralClass}}\Models\{{singularClass}};
 
 test('confirm password screen can be rendered', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $response = $this->actingAs(${{singularSlug}}, '{{singularSlug}}')->get('/{{singularSlug}}/confirm-password');
+    $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get('/{{singularSlug}}/confirm-password');
 
     $response->assertStatus(200);
 });
 
 test('password can be confirmed', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $response = $this->actingAs(${{singularSlug}}, '{{singularSlug}}')->post('/{{singularSlug}}/confirm-password', [
+    $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->post('/{{singularSlug}}/confirm-password', [
         'password' => 'password',
     ]);
 
@@ -22,9 +22,9 @@ test('password can be confirmed', function () {
 });
 
 test('password is not confirmed with invalid password', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $response = $this->actingAs(${{singularSlug}}, '{{singularSlug}}')->post('/{{singularSlug}}/confirm-password', [
+    $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->post('/{{singularSlug}}/confirm-password', [
         'password' => 'wrong-password',
     ]);
 

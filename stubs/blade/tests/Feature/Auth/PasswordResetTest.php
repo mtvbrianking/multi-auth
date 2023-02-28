@@ -13,21 +13,21 @@ test('reset password link screen can be rendered', function () {
 test('reset password link can be requested', function () {
     Notification::fake();
 
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $this->post('/{{singularSlug}}/forgot-password', ['email' => ${{singularSlug}}->email]);
+    $this->post('/{{singularSlug}}/forgot-password', ['email' => ${{singularCamel}}->email]);
 
-    Notification::assertSentTo(${{singularSlug}}, ResetPassword::class);
+    Notification::assertSentTo(${{singularCamel}}, ResetPassword::class);
 });
 
 test('reset password screen can be rendered', function () {
     Notification::fake();
 
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $this->post('/{{singularSlug}}/forgot-password', ['email' => ${{singularSlug}}->email]);
+    $this->post('/{{singularSlug}}/forgot-password', ['email' => ${{singularCamel}}->email]);
 
-    Notification::assertSentTo(${{singularSlug}}, ResetPassword::class, function ($notification) {
+    Notification::assertSentTo(${{singularCamel}}, ResetPassword::class, function ($notification) {
         $response = $this->get('/{{singularSlug}}/reset-password/'.$notification->token);
 
         $response->assertStatus(200);
@@ -39,14 +39,14 @@ test('reset password screen can be rendered', function () {
 test('password can be reset with valid token', function () {
     Notification::fake();
 
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $this->post('/{{singularSlug}}/forgot-password', ['email' => ${{singularSlug}}->email]);
+    $this->post('/{{singularSlug}}/forgot-password', ['email' => ${{singularCamel}}->email]);
 
-    Notification::assertSentTo(${{singularSlug}}, ResetPassword::class, function ($notification) use (${{singularSlug}}) {
+    Notification::assertSentTo(${{singularCamel}}, ResetPassword::class, function ($notification) use (${{singularCamel}}) {
         $response = $this->post('/{{singularSlug}}/reset-password', [
             'token' => $notification->token,
-            'email' => ${{singularSlug}}->email,
+            'email' => ${{singularCamel}}->email,
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);

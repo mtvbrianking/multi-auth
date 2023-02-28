@@ -10,30 +10,30 @@ test('login screen can be rendered', function () {
 
     // ...
 
-    ${{singularSlug}} = {{singularClass}}::factory()->create(['email_verified_at' => now()]);
+    ${{singularCamel}} = {{singularClass}}::factory()->create(['email_verified_at' => now()]);
 
-    $response = $this->actingAs(${{singularSlug}}, '{{singularSlug}}')->get(route('{{singularSlug}}.login'));
+    $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get(route('{{singularSlug}}.login'));
 
     $response->assertRedirect('/{{singularSlug}}');
 });
 
 test('users can authenticate using the login screen', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
     $response = $this->post('/{{singularSlug}}/login', [
-        'email' => ${{singularSlug}}->email,
+        'email' => ${{singularCamel}}->email,
         'password' => 'password',
     ]);
 
-    $this->assertAuthenticatedAs(${{singularSlug}}, '{{singularSlug}}');
+    $this->assertAuthenticatedAs(${{singularCamel}}, '{{singularSlug}}');
     $response->assertRedirect('/{{singularSlug}}');
 });
 
 test('users can not authenticate with invalid password', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
     $this->post('/{{singularSlug}}/login', [
-        'email' => ${{singularSlug}}->email,
+        'email' => ${{singularCamel}}->email,
         'password' => 'wrong-password',
     ]);
 
@@ -41,9 +41,9 @@ test('users can not authenticate with invalid password', function () {
 });
 
 test('can logout if authenticated', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $this->be(${{singularSlug}}, '{{singularSlug}}');
+    $this->be(${{singularCamel}}, '{{singularSlug}}');
 
     $response = $this->post(route('{{singularSlug}}.logout'));
 
@@ -52,11 +52,11 @@ test('can logout if authenticated', function () {
 });
 
 test('can not make more than five failed login attempts a minute', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
     foreach (range(0, 5) as $_) {
         $response = $this->from(route('{{singularSlug}}.login'))->post(route('{{singularSlug}}.login'), [
-            'email' => ${{singularSlug}}->email,
+            'email' => ${{singularCamel}}->email,
             'password' => Str::random(10),
         ]);
     }

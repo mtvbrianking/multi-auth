@@ -4,10 +4,10 @@ use App\Modules\{{pluralClass}}\Models\{{singularClass}};
 use Illuminate\Support\Facades\Hash;
 
 test('password can be updated', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
     $response = $this
-        ->actingAs(${{singularSlug}}, '{{singularSlug}}')
+        ->actingAs(${{singularCamel}}, '{{singularSlug}}')
         ->from('/{{singularSlug}}/profile')
         ->put('/{{singularSlug}}/password', [
             'current_password' => 'password',
@@ -19,14 +19,14 @@ test('password can be updated', function () {
         ->assertSessionHasNoErrors()
         ->assertRedirect('/{{singularSlug}}/profile');
 
-    $this->assertTrue(Hash::check('new-password', ${{singularSlug}}->refresh()->password));
+    $this->assertTrue(Hash::check('new-password', ${{singularCamel}}->refresh()->password));
 });
 
 test('correct password must be provided to update password', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
     $response = $this
-        ->actingAs(${{singularSlug}}, '{{singularSlug}}')
+        ->actingAs(${{singularCamel}}, '{{singularSlug}}')
         ->from('/{{singularSlug}}/profile')
         ->put('/{{singularSlug}}/password', [
             'current_password' => 'wrong-password',

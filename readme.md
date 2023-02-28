@@ -2,11 +2,9 @@
 
 [![Total Downloads](https://poser.pugx.org/bmatovu/multi-auth/downloads)](https://packagist.org/packages/bmatovu/multi-auth)
 [![Latest Stable Version](https://poser.pugx.org/bmatovu/multi-auth/v/stable)](https://packagist.org/packages/bmatovu/multi-auth)
-[![License](https://poser.pugx.org/bmatovu/multi-auth/license)](https://packagist.org/packages/bmatovu/multi-auth)
 [![Quality](https://scrutinizer-ci.com/g/mtvbrianking/multi-auth/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mtvbrianking/multi-auth/?branch=master)
 [![Coverage](https://scrutinizer-ci.com/g/mtvbrianking/multi-auth/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mtvbrianking/multi-auth/?branch=master)
 [![Unit Tests](https://github.com/mtvbrianking/multi-auth/workflows/run-tests/badge.svg)](https://github.com/mtvbrianking/multi-auth/actions?query=workflow:run-tests)
-[![Documentation](https://github.com/mtvbrianking/multi-auth/workflows/gen-docs/badge.svg)](https://mtvbrianking.github.io/multi-auth/master)
 
 This package gives you the ability to separate user areas in your application. 
 

@@ -3,20 +3,20 @@
 use App\Modules\{{pluralClass}}\Models\{{singularClass}};
 
 test('profile page is displayed', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
     $response = $this
-        ->actingAs(${{singularSlug}}, '{{singularSlug}}')
+        ->actingAs(${{singularCamel}}, '{{singularSlug}}')
         ->get('/{{singularSlug}}/profile');
 
     $response->assertOk();
 });
 
 test('profile information can be updated', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
     $response = $this
-        ->actingAs(${{singularSlug}}, '{{singularSlug}}')
+        ->actingAs(${{singularCamel}}, '{{singularSlug}}')
         ->patch('/{{singularSlug}}/profile', [
             'name' => 'Test {{singularClass}}',
             'email' => '{{singularSlug}}@example.com',
@@ -26,35 +26,35 @@ test('profile information can be updated', function () {
         ->assertSessionHasNoErrors()
         ->assertRedirect('/{{singularSlug}}/profile');
 
-    ${{singularSlug}}->refresh();
+    ${{singularCamel}}->refresh();
 
-    $this->assertSame('Test {{singularClass}}', ${{singularSlug}}->name);
-    $this->assertSame('{{singularSlug}}@example.com', ${{singularSlug}}->email);
-    $this->assertNull(${{singularSlug}}->email_verified_at);
+    $this->assertSame('Test {{singularClass}}', ${{singularCamel}}->name);
+    $this->assertSame('{{singularSlug}}@example.com', ${{singularCamel}}->email);
+    $this->assertNull(${{singularCamel}}->email_verified_at);
 });
 
 test('email verification status is unchanged when the email address is unchanged', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
     $response = $this
-        ->actingAs(${{singularSlug}}, '{{singularSlug}}')
+        ->actingAs(${{singularCamel}}, '{{singularSlug}}')
         ->patch('/{{singularSlug}}/profile', [
             'name' => 'Test {{singularClass}}',
-            'email' => ${{singularSlug}}->email,
+            'email' => ${{singularCamel}}->email,
         ]);
 
     $response
         ->assertSessionHasNoErrors()
         ->assertRedirect('/{{singularSlug}}/profile');
 
-    $this->assertNotNull(${{singularSlug}}->refresh()->email_verified_at);
+    $this->assertNotNull(${{singularCamel}}->refresh()->email_verified_at);
 });
 
 test('user can delete their account', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
     $response = $this
-        ->actingAs(${{singularSlug}}, '{{singularSlug}}')
+        ->actingAs(${{singularCamel}}, '{{singularSlug}}')
         ->delete('/{{singularSlug}}/profile', [
             'password' => 'password',
         ]);
@@ -64,14 +64,14 @@ test('user can delete their account', function () {
         ->assertRedirect('/{{singularSlug}}');
 
     $this->assertGuest();
-    $this->assertNull(${{singularSlug}}->fresh());
+    $this->assertNull(${{singularCamel}}->fresh());
 });
 
 test('correct password must be provided to delete account', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
     $response = $this
-        ->actingAs(${{singularSlug}}, '{{singularSlug}}')
+        ->actingAs(${{singularCamel}}, '{{singularSlug}}')
         ->from('/{{singularSlug}}/profile')
         ->delete('/{{singularSlug}}/profile', [
             'password' => 'wrong-password',
@@ -81,5 +81,5 @@ test('correct password must be provided to delete account', function () {
         ->assertSessionHasErrorsIn('userDeletion', 'password')
         ->assertRedirect('/{{singularSlug}}/profile');
 
-    $this->assertNotNull(${{singularSlug}}->fresh());
+    $this->assertNotNull(${{singularCamel}}->fresh());
 });

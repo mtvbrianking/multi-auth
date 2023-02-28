@@ -35,15 +35,15 @@ class Registered{{singularClass}}Controller extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        ${{singularSlug}} = {{singularClass}}::create([
+        ${{singularCamel}} = {{singularClass}}::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered(${{singularSlug}}));
+        event(new Registered(${{singularCamel}}));
 
-        Auth::guard('{{singularSlug}}')->login(${{singularSlug}});
+        Auth::guard('{{singularSlug}}')->login(${{singularCamel}});
 
         return redirect('/{{singularSlug}}');
     }

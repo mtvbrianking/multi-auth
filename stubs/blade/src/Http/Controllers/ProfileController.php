@@ -46,11 +46,11 @@ class ProfileController extends Controller
             'password' => ['required', 'current-password:{{singularSlug}}'],
         ]);
 
-        ${{singularSlug}} = $request->user('{{singularSlug}}');
+        ${{singularCamel}} = $request->user('{{singularSlug}}');
 
         Auth::guard('{{singularSlug}}')->logout();
 
-        ${{singularSlug}}->delete();
+        ${{singularCamel}}->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

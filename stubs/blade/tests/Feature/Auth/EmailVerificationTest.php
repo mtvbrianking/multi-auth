@@ -56,16 +56,16 @@ test('email can be verified', function () {
 });
 
 test('email is not verified with invalid hash', function () {
-    ${{singularSlug}} = {{singularClass}}::factory()->create(['email_verified_at' => null]);
+    ${{singularCamel}} = {{singularClass}}::factory()->create(['email_verified_at' => null]);
 
     $verificationUrl = URL::temporarySignedRoute('{{singularSlug}}.verification.verify', now()->addMinutes(60), [
-        'id' => ${{singularSlug}}->id,
+        'id' => ${{singularCamel}}->id,
         'hash' => sha1('wrong-email'),
     ]);
 
-    $this->actingAs(${{singularSlug}}, '{{singularSlug}}')->get($verificationUrl);
+    $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get($verificationUrl);
 
-    expect(${{singularSlug}}->fresh()->hasVerifiedEmail())->toBeFalse();
+    expect(${{singularCamel}}->fresh()->hasVerifiedEmail())->toBeFalse();
 });
 
 test('resends email verification link', function () {

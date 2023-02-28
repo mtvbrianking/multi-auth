@@ -40,13 +40,13 @@ class NewPasswordController extends Controller
         // database. Otherwise we will parse the error and return the response.
         $status = Password::broker('{{pluralSlug}}')->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (${{singularSlug}}) use ($request) {
-                ${{singularSlug}}->forceFill([
+            function (${{singularCamel}}) use ($request) {
+                ${{singularCamel}}->forceFill([
                     'password' => Hash::make($request->password),
                     'remember_token' => Str::random(60),
                 ])->save();
 
-                event(new PasswordReset(${{singularSlug}}));
+                event(new PasswordReset(${{singularCamel}}));
             }
         );
 

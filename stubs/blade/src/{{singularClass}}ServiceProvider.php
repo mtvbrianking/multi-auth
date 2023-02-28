@@ -17,7 +17,7 @@ class {{singularClass}}ServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/routes/{{singularSlug}}.php');
+        $this->loadRoutesFrom(__DIR__.'/routes/{{singularSnake}}.php');
         $this->loadViewsFrom(__DIR__.'/resources/views', '{{singularSlug}}');
 
         Blade::component('{{singularSlug}}-app-layout', View\Components\{{singularClass}}AppLayout::class);
@@ -52,33 +52,33 @@ class {{singularClass}}ServiceProvider extends ServiceProvider
      */
     protected function registerAuthDrivers(string $provider, string $guard, string $model)
     {
-        Auth::provider('{{singularSlug}}_provider_driver', function ($app) use ($model) {
+        Auth::provider('{{singularSnake}}_provider_driver', function ($app) use ($model) {
             return new {{singularClass}}UserProvider($app['hash'], $model);
         });
 
         /* AuthManager->createSessionDriver() */
-        Auth::extend('{{singularSlug}}_guard_driver', function ($app) use ($provider, $guard) {
+        Auth::extend('{{singularSnake}}_guard_driver', function ($app) use ($provider, $guard) {
             $userProvider = Auth::createUserProvider($provider);
 
-            ${{singularSlug}}Guard = new {{singularClass}}Guard($guard, $userProvider, $app['session.store']);
+            ${{singularCamel}}Guard = new {{singularClass}}Guard($guard, $userProvider, $app['session.store']);
 
-            if (method_exists(${{singularSlug}}Guard, 'setCookieJar')) {
-                ${{singularSlug}}Guard->setCookieJar($this->app['cookie']);
+            if (method_exists(${{singularCamel}}Guard, 'setCookieJar')) {
+                ${{singularCamel}}Guard->setCookieJar($this->app['cookie']);
             }
 
-            if (method_exists(${{singularSlug}}Guard, 'setDispatcher')) {
-                ${{singularSlug}}Guard->setDispatcher($this->app['events']);
+            if (method_exists(${{singularCamel}}Guard, 'setDispatcher')) {
+                ${{singularCamel}}Guard->setDispatcher($this->app['events']);
             }
 
-            if (method_exists(${{singularSlug}}Guard, 'setRequest')) {
-                ${{singularSlug}}Guard->setRequest($this->app->refresh('request', ${{singularSlug}}Guard, 'setRequest'));
+            if (method_exists(${{singularCamel}}Guard, 'setRequest')) {
+                ${{singularCamel}}Guard->setRequest($this->app->refresh('request', ${{singularCamel}}Guard, 'setRequest'));
             }
 
             if (isset($config['remember'])) {
-                ${{singularSlug}}Guard->setRememberDuration($config['remember']);
+                ${{singularCamel}}Guard->setRememberDuration($config['remember']);
             }
 
-            return ${{singularSlug}}Guard;
+            return ${{singularCamel}}Guard;
         });
     }
 
@@ -86,19 +86,19 @@ class {{singularClass}}ServiceProvider extends ServiceProvider
     {
         $this->app['config']->set('auth.guards.{{singularSlug}}', [
             // 'driver' => 'session',
-            'driver' => '{{singularSlug}}_guard_driver',
+            'driver' => '{{singularSnake}}_guard_driver',
             'provider' => '{{pluralSlug}}',
         ]);
 
         $this->app['config']->set('auth.providers.{{pluralSlug}}', [
             // 'driver' => 'eloquent',
-            'driver' => '{{singularSlug}}_provider_driver',
+            'driver' => '{{singularSnake}}_provider_driver',
             'model' => Models\{{singularClass}}::class,
         ]);
 
         $this->app['config']->set('auth.passwords.{{pluralSlug}}', [
             'provider' => '{{pluralSlug}}',
-            'table' => '{{singularSlug}}_password_reset_tokens',
+            'table' => '{{singularSnake}}_password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
         ]);
