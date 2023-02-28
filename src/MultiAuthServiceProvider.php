@@ -23,16 +23,6 @@ class MultiAuthServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        // ...
-    }
-
-    /**
      * Get the services provided by the provider.
      *
      * @return array

@@ -17,12 +17,11 @@ class InstallCommand extends Command
      * @var string
      */
     protected $signature = 'multi-auth:install
-                            {guard=admin : Name of the guard.}
+                            {guard=admin : Name of the guard (user area).}
                             {--stack= : The development stack that should be installed (blade,react,vue,api)}
                             {--dark : Indicate that dark mode support should be installed}
                             {--pest : Indicate that Pest should be installed}
-                            {--ssr : Indicates if Inertia SSR support should be installed}
-                            {--composer=global : Absolute path to the Composer binary which should be used to install packages}';
+                            {--ssr : Indicates if Inertia SSR support should be installed}';
 
     /**
      * The console command description.
@@ -46,20 +45,20 @@ class InstallCommand extends Command
         $stack = $this->option('stack');
 
         if (!$stack) {
-            $stack = $this->choice('Choose your stack:', $this->stacks, 0);
+            $stack = $this->choice('What is your stack?', $this->stacks, 0);
         }
 
         $this->hydrateStubs(__DIR__ . '/../../stubs', $this->placeholders($this->argument('guard')));
 
         if ($stack === 'vue') {
             // $this->installInertiaVueStack();
-            $this->success('Coming soon...');
+            $this->info('Coming soon...');
         } elseif ($stack === 'react') {
             // $this->installInertiaReactStack();
-            $this->success('Coming soon...');
+            $this->info('Coming soon...');
         } elseif ($stack === 'api') {
             // $this->installApiStack();
-            $this->success('Coming soon...');
+            $this->info('Coming soon...');
         } elseif ($stack === 'blade') {
             $this->installBladeStack();
         } else {
