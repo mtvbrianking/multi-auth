@@ -63,7 +63,7 @@ test('user can delete their account', function () {
         ->assertSessionHasNoErrors()
         ->assertRedirect('/{{singularSlug}}');
 
-    $this->assertGuest();
+    $this->assertGuest('{{singularSlug}}');
     $this->assertNull(${{singularCamel}}->fresh());
 });
 
