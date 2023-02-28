@@ -32,7 +32,7 @@ jobs:
         run: composer update --prefer-dist --no-interaction --no-progress
 
       - name: Generate
-        run: vendor/bin/doctum.php update doctum.php -v
+        run: vendor/bin/doctum.php update doctum.php --only-version=master --force -v
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1

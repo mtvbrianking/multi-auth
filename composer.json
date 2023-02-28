@@ -53,8 +53,8 @@
         "cs-fix": "php-cs-fixer fix",
         "cs-lint": "php-cs-fixer fix --dry-run",
         "doc": "doctum.php update doctum.php -v",
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage"
     },
     "config": {
         "sort-packages": true
