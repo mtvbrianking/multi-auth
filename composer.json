@@ -29,6 +29,8 @@
         "illuminate/support": "^10.0"
     },
     "require-dev": {
+        "code-lts/doctum": "^5.5",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "orchestra/testbench": "^8.0",
         "phpunit/phpunit": "^10.0"
     },
@@ -47,6 +49,16 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "scripts": {
+        "cs-fix": "php-cs-fixer fix",
+        "cs-lint": "php-cs-fixer fix --dry-run",
+        "doc": "doctum.php update doctum.php -v",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "12.x-dev"

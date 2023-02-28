@@ -1,0 +1,18 @@
+build:
+
+  environment:
+    php: 8.1.2
+
+  nodes:
+    analysis:
+      tests:
+        override:
+          - php-scrutinizer-run
+
+filter:
+  excluded_paths:
+    - "bin/"
+    - "tests/"
+
+tools:
+  external_code_coverage: true
