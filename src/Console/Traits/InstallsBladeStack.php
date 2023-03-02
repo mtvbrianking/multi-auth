@@ -14,22 +14,27 @@ trait InstallsBladeStack
      */
     protected function installBladeStack()
     {
+        $fs = new Filesystem;
         $guard = $this->argument('guard');
         $pluralClass = Str::plural(Str::studly($guard));
         $singularSlug = Str::singular(Str::slug($guard));
         $singularClass = Str::singular(Str::studly($guard));
 
         // Module...
-        (new Filesystem())->ensureDirectoryExists(app_path("Modules/{$pluralClass}"));
-        (new Filesystem())->copyDirectory(__DIR__.'/../../../.stubs/blade/src', app_path("Modules/{$pluralClass}"));
+        $fs->ensureDirectoryExists(app_path("Modules/{$pluralClass}"));
+        $fs->copyDirectory(__DIR__ . '/../../../.stubs/blade/src', app_path("Modules/{$pluralClass}"));
 
         // Views...
-        (new Filesystem())->ensureDirectoryExists(resource_path("views/{$singularSlug}"));
-        (new Filesystem())->copyDirectory(__DIR__.'/../../../.stubs/blade/resources/views', resource_path("views/{$singularSlug}"));
+        $fs->ensureDirectoryExists(resource_path("views/{$singularSlug}"));
+        $fs->copyDirectory(__DIR__ . '/../../../.stubs/blade/resources/views', resource_path("views/{$singularSlug}"));
 
         // Tests...
-        (new Filesystem())->ensureDirectoryExists(base_path("tests/Feature/{$singularClass}"));
-        (new Filesystem())->copyDirectory(__DIR__.'/../../../.stubs/blade/tests/Feature', base_path("tests/Feature/{$singularClass}"));
+        $fs->ensureDirectoryExists(base_path("tests/Feature/{$singularClass}"));
+        if ($this->option('pest')) {
+            $fs->copyDirectory(__DIR__ . '/../../../.stubs/blade/pest-tests/Feature', base_path("tests/Feature/{$singularClass}"));
+        } else {
+            $fs->copyDirectory(__DIR__ . '/../../../.stubs/blade/tests/Feature', base_path("tests/Feature/{$singularClass}"));
+        }
 
         // Conclude...
         $this->info("{$singularClass} guard successfully setup.");

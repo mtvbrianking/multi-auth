@@ -1,80 +1,44 @@
 <?php
 
+namespace Tests\Feature\Auth;
+
 use App\Modules\{{pluralClass}}\Models\{{singularClass}};
-use Illuminate\Support\Str;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-test('login screen can be rendered', function () {
-    $response = $this->get('/{{singularSlug}}/login');
+class AuthenticationTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $response->assertStatus(200);
+    public function test_login_screen_can_be_rendered(): void
+    {
+        $response = $this->get('/{{singularSlug}}/login');
 
-    // ...
-
-    ${{singularCamel}} = {{singularClass}}::factory()->create(['email_verified_at' => now()]);
-
-    $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get(route('{{singularSlug}}.login'));
-
-    $response->assertRedirect('/{{singularSlug}}');
-});
-
-test('users can authenticate using the login screen', function () {
-    ${{singularCamel}} = {{singularClass}}::factory()->create();
-
-    $response = $this->post('/{{singularSlug}}/login', [
-        'email' => ${{singularCamel}}->email,
-        'password' => 'password',
-    ]);
-
-    $this->assertAuthenticatedAs(${{singularCamel}}, '{{singularSlug}}');
-    $response->assertRedirect('/{{singularSlug}}');
-});
-
-test('users can not authenticate with invalid password', function () {
-    ${{singularCamel}} = {{singularClass}}::factory()->create();
-
-    $this->post('/{{singularSlug}}/login', [
-        'email' => ${{singularCamel}}->email,
-        'password' => 'wrong-password',
-    ]);
-
-    $this->assertGuest('{{singularSlug}}');
-});
-
-test('can logout if authenticated', function () {
-    ${{singularCamel}} = {{singularClass}}::factory()->create();
-
-    $this->be(${{singularCamel}}, '{{singularSlug}}');
-
-    $response = $this->post(route('{{singularSlug}}.logout'));
-
-    $response->assertRedirect(route('{{singularSlug}}.dashboard'));
-    $this->assertGuest('{{singularSlug}}');
-});
-
-test('can not make more than five failed login attempts a minute', function () {
-    ${{singularCamel}} = {{singularClass}}::factory()->create();
-
-    foreach (range(0, 5) as $_) {
-        $response = $this->from(route('{{singularSlug}}.login'))->post(route('{{singularSlug}}.login'), [
-            'email' => ${{singularCamel}}->email,
-            'password' => Str::random(10),
-        ]);
+        $response->assertStatus(200);
     }
 
-    $response->assertRedirect(route('{{singularSlug}}.login'));
-    $response->assertSessionHasErrors('email');
-    static::assertStringContainsString(
-        'Too many login attempts.',
-        collect(
-            $response
-                ->baseResponse
-                ->getSession()
-                ->get('errors')
-                ->getBag('default')
-                ->get('email')
-        )->first()
-    );
-    static::assertTrue(session()->hasOldInput('email'));
-    static::assertFalse(session()->hasOldInput('password'));
-    $this->assertGuest('{{singularSlug}}');
-});
+    public function test_{{pluralSlug}}_can_authenticate_using_the_login_screen(): void
+    {
+        ${{singularCamel}} = {{singularClass}}::factory()->create();
+
+        $response = $this->post('/{{singularSlug}}/login', [
+            'email' => ${{singularCamel}}->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect('/{{singularSlug}}');
+    }
+
+    public function test_{{pluralSlug}}_can_not_authenticate_with_invalid_password(): void
+    {
+        ${{singularCamel}} = {{singularClass}}::factory()->create();
+
+        $this->post('/{{singularSlug}}/login', [
+            'email' => ${{singularCamel}}->email,
+            'password' => 'wrong-password',
+        ]);
+
+        $this->assertGuest('{{singularSlug}}');
+    }
+}

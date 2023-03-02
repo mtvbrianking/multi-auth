@@ -1,91 +1,64 @@
 <?php
 
+namespace Tests\Feature\Auth;
+
 use App\Modules\{{pluralClass}}\Models\{{singularClass}};
-use App\Modules\{{pluralClass}}\Notifications\Auth\VerifyEmail;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
+use Tests\TestCase;
 
-test('email verification screen can be rendered', function () {
-    $verified{{singularClass}} = {{singularClass}}::factory()->create(['email_verified_at' => now()]);
+class EmailVerificationTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $response = $this->actingAs($verified{{singularClass}}, '{{singularSlug}}')->get('/{{singularSlug}}/verify-email');
+    public function test_email_verification_screen_can_be_rendered(): void
+    {
+        ${{singularCamel}} = {{singularClass}}::factory()->create([
+            'email_verified_at' => null,
+        ]);
 
-    $response->assertRedirect('/{{singularSlug}}');
+        $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get('/{{singularSlug}}/verify-email');
 
-    // ...
+        $response->assertStatus(200);
+    }
 
-    $nonVerified{{singularClass}} = {{singularClass}}::factory()->create(['email_verified_at' => null]);
+    public function test_email_can_be_verified(): void
+    {
+        ${{singularCamel}} = {{singularClass}}::factory()->create([
+            'email_verified_at' => null,
+        ]);
 
-    $response = $this->actingAs($nonVerified{{singularClass}}, '{{singularSlug}}')->get('/{{singularSlug}}/verify-email');
+        Event::fake();
 
-    $response->assertStatus(200);
-});
+        $verificationUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => ${{singularCamel}}->id, 'hash' => sha1(${{singularCamel}}->email)]
+        );
 
-test('email can be verified', function () {
-    $nonVerified{{singularClass}} = {{singularClass}}::factory()->create(['email_verified_at' => null]);
+        $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get($verificationUrl);
 
-    $verified{{singularClass}} = {{singularClass}}::factory()->create(['email_verified_at' => now()]);
+        Event::assertDispatched(Verified::class);
+        $this->assertTrue(${{singularCamel}}->fresh()->hasVerifiedEmail());
+        $response->assertRedirect('/{{singularSlug}}'.'?verified=1');
+    }
 
-    Event::fake();
+    public function test_email_is_not_verified_with_invalid_hash(): void
+    {
+        ${{singularCamel}} = {{singularClass}}::factory()->create([
+            'email_verified_at' => null,
+        ]);
 
-    $verificationUrl = URL::temporarySignedRoute('{{singularSlug}}.verification.verify', now()->addMinutes(60), [
-        'id' => $verified{{singularClass}}->id,
-        'hash' => sha1($verified{{singularClass}}->email),
-    ]);
+        $verificationUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => ${{singularCamel}}->id, 'hash' => sha1('wrong-email')]
+        );
 
-    $response = $this->actingAs($verified{{singularClass}}, '{{singularSlug}}')->get($verificationUrl);
+        $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get($verificationUrl);
 
-    Event::assertNotDispatched(Verified::class);
-
-    $response->assertRedirect('/{{singularSlug}}?verified=1');
-
-    // ...
-
-    $verificationUrl = URL::temporarySignedRoute('{{singularSlug}}.verification.verify', now()->addMinutes(60), [
-        'id' => $nonVerified{{singularClass}}->id,
-        'hash' => sha1($nonVerified{{singularClass}}->email),
-    ]);
-
-    $response = $this->actingAs($nonVerified{{singularClass}}, '{{singularSlug}}')->get($verificationUrl);
-
-    Event::assertDispatched(Verified::class);
-    expect($nonVerified{{singularClass}}->fresh()->hasVerifiedEmail())->toBeTrue();
-    $response->assertRedirect('/{{singularSlug}}?verified=1');
-});
-
-test('email is not verified with invalid hash', function () {
-    ${{singularCamel}} = {{singularClass}}::factory()->create(['email_verified_at' => null]);
-
-    $verificationUrl = URL::temporarySignedRoute('{{singularSlug}}.verification.verify', now()->addMinutes(60), [
-        'id' => ${{singularCamel}}->id,
-        'hash' => sha1('wrong-email'),
-    ]);
-
-    $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get($verificationUrl);
-
-    expect(${{singularCamel}}->fresh()->hasVerifiedEmail())->toBeFalse();
-});
-
-test('resends email verification link', function () {
-    $verified{{singularClass}} = {{singularClass}}::factory()->create(['email_verified_at' => now()]);
-
-    $response = $this->actingAs($verified{{singularClass}}, '{{singularSlug}}')->post(route('{{singularSlug}}.verification.send'));
-
-    $response->assertRedirect('/{{singularSlug}}');
-
-    // ...
-
-    Notification::fake();
-
-    $nonVerified{{singularClass}} = {{singularClass}}::factory()->create(['email_verified_at' => null]);
-
-    $response = $this->actingAs($nonVerified{{singularClass}}, '{{singularSlug}}')
-        ->from(route('{{singularSlug}}.verification.notice'))
-        ->post(route('{{singularSlug}}.verification.send'));
-
-    Notification::assertSentTo($nonVerified{{singularClass}}, VerifyEmail::class);
-
-    $response->assertRedirect(route('{{singularSlug}}.verification.notice'));
-});
+        $this->assertFalse(${{singularCamel}}->fresh()->hasVerifiedEmail());
+    }
+}

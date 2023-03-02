@@ -1,32 +1,44 @@
 <?php
 
+namespace Tests\Feature\Auth;
+
 use App\Modules\{{pluralClass}}\Models\{{singularClass}};
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-test('confirm password screen can be rendered', function () {
-    ${{singularCamel}} = {{singularClass}}::factory()->create();
+class PasswordConfirmationTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get('/{{singularSlug}}/confirm-password');
+    public function test_confirm_password_screen_can_be_rendered(): void
+    {
+        ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $response->assertStatus(200);
-});
+        $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get('/{{singularSlug}}/confirm-password');
 
-test('password can be confirmed', function () {
-    ${{singularCamel}} = {{singularClass}}::factory()->create();
+        $response->assertStatus(200);
+    }
 
-    $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->post('/{{singularSlug}}/confirm-password', [
-        'password' => 'password',
-    ]);
+    public function test_password_can_be_confirmed(): void
+    {
+        ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $response->assertRedirect();
-    $response->assertSessionHasNoErrors();
-});
+        $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->post('/{{singularSlug}}/confirm-password', [
+            'password' => 'password',
+        ]);
 
-test('password is not confirmed with invalid password', function () {
-    ${{singularCamel}} = {{singularClass}}::factory()->create();
+        $response->assertRedirect();
+        $response->assertSessionHasNoErrors();
+    }
 
-    $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->post('/{{singularSlug}}/confirm-password', [
-        'password' => 'wrong-password',
-    ]);
+    public function test_password_is_not_confirmed_with_invalid_password(): void
+    {
+        ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $response->assertSessionHasErrors();
-});
+        $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->post('/{{singularSlug}}/confirm-password', [
+            'password' => 'wrong-password',
+        ]);
+
+        $response->assertSessionHasErrors();
+    }
+}

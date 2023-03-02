@@ -1,40 +1,51 @@
 <?php
 
+namespace Tests\Feature\Auth;
+
 use App\Modules\{{pluralClass}}\Models\{{singularClass}};
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
 
-test('password can be updated', function () {
-    ${{singularCamel}} = {{singularClass}}::factory()->create();
+class PasswordUpdateTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $response = $this
-        ->actingAs(${{singularCamel}}, '{{singularSlug}}')
-        ->from('/{{singularSlug}}/profile')
-        ->put('/{{singularSlug}}/password', [
-            'current_password' => 'password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
-        ]);
+    public function test_password_can_be_updated(): void
+    {
+        ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/{{singularSlug}}/profile');
+        $response = $this
+            ->actingAs(${{singularCamel}}, '{{singularSlug}}')
+            ->from('/{{singularSlug}}/profile')
+            ->put('/{{singularSlug}}/password', [
+                'current_password' => 'password',
+                'password' => 'new-password',
+                'password_confirmation' => 'new-password',
+            ]);
 
-    $this->assertTrue(Hash::check('new-password', ${{singularCamel}}->refresh()->password));
-});
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/{{singularSlug}}/profile');
 
-test('correct password must be provided to update password', function () {
-    ${{singularCamel}} = {{singularClass}}::factory()->create();
+        $this->assertTrue(Hash::check('new-password', ${{singularCamel}}->refresh()->password));
+    }
 
-    $response = $this
-        ->actingAs(${{singularCamel}}, '{{singularSlug}}')
-        ->from('/{{singularSlug}}/profile')
-        ->put('/{{singularSlug}}/password', [
-            'current_password' => 'wrong-password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
-        ]);
+    public function test_correct_password_must_be_provided_to_update_password(): void
+    {
+        ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $response
-        ->assertSessionHasErrorsIn('updatePassword', 'current_password')
-        ->assertRedirect('/{{singularSlug}}/profile');
-});
+        $response = $this
+            ->actingAs(${{singularCamel}}, '{{singularSlug}}')
+            ->from('/{{singularSlug}}/profile')
+            ->put('/{{singularSlug}}/password', [
+                'current_password' => 'wrong-password',
+                'password' => 'new-password',
+                'password_confirmation' => 'new-password',
+            ]);
+
+        $response
+            ->assertSessionHasErrorsIn('updatePassword', 'current_password')
+            ->assertRedirect('/{{singularSlug}}/profile');
+    }
+}

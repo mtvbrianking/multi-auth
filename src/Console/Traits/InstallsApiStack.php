@@ -17,7 +17,6 @@ trait InstallsApiStack
         $fs = new Filesystem;
         $guard = $this->argument('guard');
         $pluralClass = Str::plural(Str::studly($guard));
-        $singularSlug = Str::singular(Str::slug($guard));
         $singularClass = Str::singular(Str::studly($guard));
 
         // Module...
@@ -31,6 +30,7 @@ trait InstallsApiStack
         } else {
             $fs->copyDirectory(__DIR__ . '/../../../.stubs/api/tests/Feature', base_path("tests/Feature/{$singularClass}"));
         }
+
         // Conclude...
         $this->info("{$singularClass} guard successfully setup.");
 

@@ -1,21 +1,31 @@
 <?php
 
-use App\Modules\{{pluralClass}}\Models\{{singularClass}};
+namespace Tests\Feature\Auth;
 
-test('registration screen can be rendered', function () {
-    $response = $this->get('/{{singularSlug}}/register');
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-    $response->assertStatus(200);
-});
+class RegistrationTest extends TestCase
+{
+    use RefreshDatabase;
 
-test('new users can register', function () {
-    $response = $this->post('/{{singularSlug}}/register', [
-        'name' => 'Test {{singularClass}}',
-        'email' => 'test@example.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
-    ]);
+    public function test_registration_screen_can_be_rendered(): void
+    {
+        $response = $this->get('/{{singularSlug}}/register');
 
-    $this->assertAuthenticatedAs({{singularClass}}::first(), '{{singularSlug}}');
-    $response->assertRedirect('/{{singularSlug}}');
-});
+        $response->assertStatus(200);
+    }
+
+    public function test_new_{{pluralSlug}}_can_register(): void
+    {
+        $response = $this->post('/{{singularSlug}}/register', [
+            'name' => 'Test {{singularClass}}',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect('/{{singularSlug}}');
+    }
+}
