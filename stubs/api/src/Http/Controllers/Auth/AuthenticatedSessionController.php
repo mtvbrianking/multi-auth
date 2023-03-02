@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Admins\Http\Controllers\Auth;
+namespace App\Modules\{{pluralClass}}\Http\Controllers\Auth;
 
-use App\Modules\Admins\Http\Controllers\Controller;
-use App\Modules\Admins\Http\Requests\Auth\LoginRequest;
+use App\Modules\{{pluralClass}}\Http\Controllers\Controller;
+use App\Modules\{{pluralClass}}\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +27,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): Response
     {
-        Auth::guard('web')->logout();
+        Auth::guard('{{singularSlug}}')->logout();
 
         $request->session()->invalidate();
 

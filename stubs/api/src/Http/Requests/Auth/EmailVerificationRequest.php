@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Admins\Http\Requests\Auth;
+namespace App\Modules\{{pluralClass}}\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Http\FormRequest;
@@ -18,11 +18,11 @@ class EmailVerificationRequest extends FormRequest
      */
     public function authorize()
     {
-        if (!hash_equals((string) $this->user('admin')->getKey(), (string) $this->route('id'))) {
+        if (!hash_equals((string) $this->user('{{singularSlug}}')->getKey(), (string) $this->route('id'))) {
             return false;
         }
 
-        if (!hash_equals(sha1($this->user('admin')->getEmailForVerification()), (string) $this->route('hash'))) {
+        if (!hash_equals(sha1($this->user('{{singularSlug}}')->getEmailForVerification()), (string) $this->route('hash'))) {
             return false;
         }
 
@@ -48,10 +48,10 @@ class EmailVerificationRequest extends FormRequest
      */
     public function fulfill()
     {
-        if (!$this->user('admin')->hasVerifiedEmail()) {
-            $this->user('admin')->markEmailAsVerified();
+        if (!$this->user('{{singularSlug}}')->hasVerifiedEmail()) {
+            $this->user('{{singularSlug}}')->markEmailAsVerified();
 
-            event(new Verified($this->user('admin')));
+            event(new Verified($this->user('{{singularSlug}}')));
         }
     }
 

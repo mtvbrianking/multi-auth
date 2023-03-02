@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Admins\Http\Controllers\Auth;
+namespace App\Modules\{{pluralClass}}\Http\Controllers\Auth;
 
-use App\Modules\Admins\Http\Controllers\Controller;
+use App\Modules\{{pluralClass}}\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -24,7 +24,7 @@ class PasswordResetLinkController extends Controller
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::broker('admins')->sendResetLink(
+        $status = Password::broker('{{pluralSlug}}')->sendResetLink(
             $request->only('email')
         );
 

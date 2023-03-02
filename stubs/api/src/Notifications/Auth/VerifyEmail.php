@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Admins\Notifications\Auth;
+namespace App\Modules\{{pluralClass}}\Notifications\Auth;
 
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -84,7 +84,7 @@ class VerifyEmail extends Notification
         }
 
         return URL::temporarySignedRoute(
-            'admin.verification.verify',
+            '{{singularSlug}}.verification.verify',
             Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
             [
                 'id' => $notifiable->getKey(),

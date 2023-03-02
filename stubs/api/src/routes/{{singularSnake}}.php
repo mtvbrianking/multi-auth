@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/admin', function () {
+Route::get('/{{singularSlug}}', function () {
     return ['Laravel' => app()->version()];
-})->name('admin.home');
+})->name('{{singularSlug}}.home');
 
 require __DIR__ . '/auth.php';

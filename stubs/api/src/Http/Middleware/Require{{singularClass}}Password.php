@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Admins\Http\Middleware;
+namespace App\Modules\{{pluralClass}}\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @see \Illuminate\Auth\Middleware\RequirePassword
  */
-class RequireAdminPassword
+class Require{{singularClass}}Password
 {
     /**
      * The response factory instance.
@@ -49,7 +49,7 @@ class RequireAdminPassword
             }
 
             return $this->responseFactory->redirectGuest(
-                $this->urlGenerator->route($redirectToRoute ?? 'admin.password.confirm')
+                $this->urlGenerator->route($redirectToRoute ?? '{{singularSlug}}.password.confirm')
             );
         }
 
@@ -61,7 +61,7 @@ class RequireAdminPassword
      */
     protected function shouldConfirmPassword(Request $request): bool
     {
-        $confirmedAt = time() - $request->session()->get('admin.auth.password_confirmed_at', 0);
+        $confirmedAt = time() - $request->session()->get('{{singularSlug}}.auth.password_confirmed_at', 0);
 
         return $confirmedAt > config('auth.password_timeout', 10800);
     }

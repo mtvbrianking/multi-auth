@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Modules\Admins\Models;
+namespace App\Modules\{{pluralClass}}\Models;
 
-use App\Modules\Admins\Database\Factories\AdminFactory;
-use App\Modules\Admins\Notifications\Auth\ResetPassword;
-use App\Modules\Admins\Notifications\Auth\VerifyEmail;
+use App\Modules\{{pluralClass}}\Database\Factories\{{singularClass}}Factory;
+use App\Modules\{{pluralClass}}\Notifications\Auth\ResetPassword;
+use App\Modules\{{pluralClass}}\Notifications\Auth\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Admin extends Authenticatable implements MustVerifyEmail
+class {{singularClass}} extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -52,7 +52,7 @@ class Admin extends Authenticatable implements MustVerifyEmail
      */
     protected static function newFactory()
     {
-        return AdminFactory::new();
+        return {{singularClass}}Factory::new();
     }
 
     /**

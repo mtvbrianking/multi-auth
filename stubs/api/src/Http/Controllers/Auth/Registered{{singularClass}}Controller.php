@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Modules\{{pluralClass}}\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Modules\{{pluralClass}}\Http\Controllers\Controller;
 use App\Modules\{{pluralClass}}\Models\{{singularClass}};
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class Registered{{singularClass}}Controller extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.{{singularClass}}::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . {{singularClass}}::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -34,7 +34,7 @@ class Registered{{singularClass}}Controller extends Controller
 
         event(new Registered(${{singularCamel}}));
 
-        Auth::login(${{singularCamel}});
+        Auth::guard('{{singularSlug}}')->login(${{singularCamel}});
 
         return response()->noContent();
     }

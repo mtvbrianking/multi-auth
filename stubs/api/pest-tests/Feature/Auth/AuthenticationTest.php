@@ -1,26 +1,26 @@
 <?php
 
-use App\Modules\Admins\Models\Admin;
+use App\Modules\{{pluralClass}}\Models\{{singularClass}};
 
 test('users can authenticate using the login screen', function () {
-    $admin = Admin::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $response = $this->post('/admin/login', [
-        'email' => $admin->email,
+    $response = $this->post('/{{singularSlug}}/login', [
+        'email' => ${{singularCamel}}->email,
         'password' => 'password',
     ]);
 
-    $this->assertAuthenticatedAs($admin, 'admin');
+    $this->assertAuthenticatedAs(${{singularCamel}}, '{{singularSlug}}');
     $response->assertNoContent();
 });
 
 test('users can not authenticate with invalid password', function () {
-    $admin = Admin::factory()->create();
+    ${{singularCamel}} = {{singularClass}}::factory()->create();
 
-    $this->post('/admin/login', [
-        'email' => $admin->email,
+    $this->post('/{{singularSlug}}/login', [
+        'email' => ${{singularCamel}}->email,
         'password' => 'wrong-password',
     ]);
 
-    $this->assertGuest('admin');
+    $this->assertGuest('{{singularSlug}}');
 });

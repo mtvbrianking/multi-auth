@@ -2,6 +2,7 @@
 
 namespace Bmatovu\MultiAuth\Console;
 
+use Bmatovu\MultiAuth\Console\Traits\InstallsApiStack;
 use Bmatovu\MultiAuth\Console\Traits\InstallsBladeStack;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -10,7 +11,7 @@ use Symfony\Component\Finder\Finder;
 
 class InstallCommand extends Command
 {
-    use InstallsBladeStack;
+    use InstallsApiStack, InstallsBladeStack;
 
     /**
      * The name and signature of the console command.
@@ -62,8 +63,7 @@ class InstallCommand extends Command
             // $this->installInertiaReactStack();
             $this->info('Coming soon...');
         } elseif ('api' === $stack) {
-            // $this->installApiStack();
-            $this->info('Coming soon...');
+            $this->installApiStack();
         } elseif ('blade' === $stack) {
             $this->installBladeStack();
         } else {

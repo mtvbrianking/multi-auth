@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Admins\Http\Middleware;
+namespace App\Modules\{{pluralClass}}\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -10,15 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @see \Http\Middleware\RedirectIfAuthenticated
  */
-class RedirectIfAdmin
+class RedirectIf{{singularClass}}
 {
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next, string $guard = 'admin'): Response
+    public function handle(Request $request, Closure $next, string $guard = '{{singularSlug}}'): Response
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/admin');
+            return redirect('/{{singularSlug}}');
         }
 
         return $next($request);

@@ -1,42 +1,42 @@
 <?php
 
-use App\Modules\Admins\Models\Admin;
+use App\Modules\{{pluralClass}}\Models\{{singularClass}};
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 
 test('email can be verified', function () {
-    $admin = Admin::factory()->create([
+    ${{singularCamel}} = {{singularClass}}::factory()->create([
         'email_verified_at' => null,
     ]);
 
     Event::fake();
 
     $verificationUrl = URL::temporarySignedRoute(
-        'admin.verification.verify',
+        '{{singularSlug}}.verification.verify',
         now()->addMinutes(60),
-        ['id' => $admin->id, 'hash' => sha1($admin->email)]
+        ['id' => ${{singularCamel}}->id, 'hash' => sha1(${{singularCamel}}->email)]
     );
 
-    $response = $this->actingAs($admin, 'admin')->get($verificationUrl);
+    $response = $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get($verificationUrl);
 
     Event::assertDispatched(Verified::class);
-    expect($admin->fresh()->hasVerifiedEmail())->toBeTrue();
-    $response->assertRedirect(config('app.frontend_url') . '/admin?verified=1');
+    expect(${{singularCamel}}->fresh()->hasVerifiedEmail())->toBeTrue();
+    $response->assertRedirect(config('app.frontend_url') . '/{{singularSlug}}?verified=1');
 });
 
 test('email is not verified with invalid hash', function () {
-    $admin = Admin::factory()->create([
+    ${{singularCamel}} = {{singularClass}}::factory()->create([
         'email_verified_at' => null,
     ]);
 
     $verificationUrl = URL::temporarySignedRoute(
-        'admin.verification.verify',
+        '{{singularSlug}}.verification.verify',
         now()->addMinutes(60),
-        ['id' => $admin->id, 'hash' => sha1('wrong-email')]
+        ['id' => ${{singularCamel}}->id, 'hash' => sha1('wrong-email')]
     );
 
-    $this->actingAs($admin, 'admin')->get($verificationUrl);
+    $this->actingAs(${{singularCamel}}, '{{singularSlug}}')->get($verificationUrl);
 
-    expect($admin->fresh()->hasVerifiedEmail())->toBeFalse();
+    expect(${{singularCamel}}->fresh()->hasVerifiedEmail())->toBeFalse();
 });

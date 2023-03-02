@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Modules\Admins\Database\Factories;
+namespace App\Modules\{{pluralClass}}\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Modules\Admins\Models\Admin>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Modules\{{pluralClass}}\Models\{{singularClass}}>
  */
-class AdminFactory extends Factory
+class {{singularClass}}Factory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var class-string<\Illuminate\Database\Eloquent\Model|TModel>
      */
-    protected $model = \App\Modules\Admins\Models\Admin::class;
+    protected $model = \App\Modules\{{pluralClass}}\Models\{{singularClass}}::class;
 
     /**
      * Define the model's default state.
