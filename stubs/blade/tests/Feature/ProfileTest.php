@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\{{pluralClass}};
 
 use App\Modules\{{pluralClass}}\Models\{{singularClass}};
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -73,7 +73,7 @@ class ProfileTest extends TestCase
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/{{singularSlug}}/');
+            ->assertRedirect('/{{singularSlug}}');
 
         $this->assertGuest('{{singularSlug}}');
         $this->assertNull(${{singularCamel}}->fresh());

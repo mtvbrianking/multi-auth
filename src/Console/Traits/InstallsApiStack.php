@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 trait InstallsApiStack
 {
     /**
-     * Install the Blade Breeze stack.
+     * Install the API Breeze stack.
      *
      * @return null|int
      */
@@ -24,11 +24,11 @@ trait InstallsApiStack
         $fs->copyDirectory(__DIR__ . '/../../../.stubs/api/src', app_path("Modules/{$pluralClass}"));
 
         // Tests...
-        $fs->ensureDirectoryExists(base_path("tests/Feature/{$singularClass}"));
+        $fs->ensureDirectoryExists(base_path("tests/Feature/{$pluralClass}"));
         if ($this->option('pest')) {
-            $fs->copyDirectory(__DIR__ . '/../../../.stubs/api/pest-tests/Feature', base_path("tests/Feature/{$singularClass}"));
+            $fs->copyDirectory(__DIR__ . '/../../../.stubs/api/pest-tests/Feature', base_path("tests/Feature/{$pluralClass}"));
         } else {
-            $fs->copyDirectory(__DIR__ . '/../../../.stubs/api/tests/Feature', base_path("tests/Feature/{$singularClass}"));
+            $fs->copyDirectory(__DIR__ . '/../../../.stubs/api/tests/Feature', base_path("tests/Feature/{$pluralClass}"));
         }
 
         // Conclude...

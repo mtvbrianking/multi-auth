@@ -45,7 +45,9 @@
         }
     },
     "suggest": {
-        "laravel/breeze": "Min. Laravel auth scaffolding with Blade and Tailwind."
+        "inertiajs/inertia-laravel": "The Laravel adapter for Inertia.js.",
+        "laravel/breeze": "Min. Laravel auth scaffolding with Blade and Tailwind.",
+        "tightenco/ziggy": "Use your Laravel named routes in Javascript"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

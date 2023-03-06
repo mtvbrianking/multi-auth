@@ -2,7 +2,7 @@
 
 use App\Modules\{{pluralClass}}\Models\{{singularClass}};
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\{{pluralClass}}\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

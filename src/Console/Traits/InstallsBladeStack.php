@@ -29,11 +29,11 @@ trait InstallsBladeStack
         $fs->copyDirectory(__DIR__ . '/../../../.stubs/blade/resources/views', resource_path("views/{$singularSlug}"));
 
         // Tests...
-        $fs->ensureDirectoryExists(base_path("tests/Feature/{$singularClass}"));
+        $fs->ensureDirectoryExists(base_path("tests/Feature/{$pluralClass}"));
         if ($this->option('pest')) {
-            $fs->copyDirectory(__DIR__ . '/../../../.stubs/blade/pest-tests/Feature', base_path("tests/Feature/{$singularClass}"));
+            $fs->copyDirectory(__DIR__ . '/../../../.stubs/blade/pest-tests/Feature', base_path("tests/Feature/{$pluralClass}"));
         } else {
-            $fs->copyDirectory(__DIR__ . '/../../../.stubs/blade/tests/Feature', base_path("tests/Feature/{$singularClass}"));
+            $fs->copyDirectory(__DIR__ . '/../../../.stubs/blade/tests/Feature', base_path("tests/Feature/{$pluralClass}"));
         }
 
         // Conclude...

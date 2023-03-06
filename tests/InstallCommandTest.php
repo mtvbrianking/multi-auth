@@ -16,8 +16,14 @@ class InstallCommandTest extends TestCase
 
     public function testInstallInertiaVueStack()
     {
-        $this->artisan('multi-auth:install --stack=vue')
-            ->expectsOutput('Coming soon...')
+        $guard = 'seller';
+
+        $pluralClass = Str::plural(Str::studly($guard));
+        $singularClass = Str::singular(Str::studly($guard));
+
+        $this->artisan("multi-auth:install {$guard} --stack=vue")
+            ->expectsOutput("{$singularClass} guard successfully setup.")
+            ->expectsOutput("\nRegister `App\\Modules\\{$pluralClass}\\{$singularClass}ServiceProvider::class` in `config/app.php`")
             ->assertExitCode(1);
     }
 
