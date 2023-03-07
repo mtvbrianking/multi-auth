@@ -61,7 +61,7 @@ class ProfileTest extends TestCase
         $this->assertNotNull(${{singularCamel}}->refresh()->email_verified_at);
     }
 
-    public function test_{{singularSlug}}_can_delete_their_account(): void
+    public function test_{{singularSnake}}_can_delete_their_account(): void
     {
         ${{singularCamel}} = {{singularClass}}::factory()->create();
 

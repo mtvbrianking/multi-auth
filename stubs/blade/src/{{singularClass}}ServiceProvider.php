@@ -18,7 +18,7 @@ class {{singularClass}}ServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
         $this->loadRoutesFrom(__DIR__.'/routes/{{singularSnake}}.php');
-        $this->loadViewsFrom(__DIR__.'/resources/views', '{{singularSlug}}');
+        // $this->loadViewsFrom(__DIR__.'/resources/views', '{{singularSlug}}');
 
         Blade::component('{{singularSlug}}-app-layout', View\Components\{{singularClass}}AppLayout::class);
         Blade::component('{{singularSlug}}-guest-layout', View\Components\{{singularClass}}GuestLayout::class);

@@ -35,13 +35,42 @@ php artisan multi-auth:install {guard}
 > config/app.php
 
 ```diff
-      'providers' => [
-          /*
-           * Package Service Providers...
-           */
-+         App\Modules\Admins\AdminServiceProvider::class,
-      ],
+  'providers' => [
+      /*
+      * Package Service Providers...
+      */
++     App\Modules\Admins\AdminServiceProvider::class,
+  ],
 ```
+## Add JS, CSS resources to Vite (Inertia - Vue, React)
+
+```diff
+  export default defineConfig({
+      plugins: [
+          laravel({
+-             input: 'resources/js/app.js',
++             input: [
++                 'resources/js/app.js',
++                 'resources/js/Admins/app.js',
++             ],
+-             ssr: 'resources/js/ssr.js',
++             ssr: [
++                 'resources/js/ssr.js',
++                 'resources/js/Admins/ssr.js',
++             ],
+              refresh: true,
+          }),
+          ...
+      ],
+  });
+```
+
+## Recompile frontend assets
+
+```bash
+npm run build
+```
+
 ## Run Database Migrations
 
 ```bash

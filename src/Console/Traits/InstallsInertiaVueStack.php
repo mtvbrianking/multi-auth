@@ -26,10 +26,10 @@ trait InstallsInertiaVueStack
 
         // Views...
         $fs->ensureDirectoryExists(resource_path("views/{$singularSlug}"));
-        $fs->copyDirectory(__DIR__ . '/../../../.stubs/vue/resources/js', resource_path("js/{$pluralClass}"));
+        $fs->copyDirectory(__DIR__ . '/../../../.stubs/vue/resources/js', resource_path("js"));
 
         $fs->ensureDirectoryExists(resource_path("views/{$singularSlug}"));
-        $fs->copyDirectory(__DIR__ . '/../../../.stubs/vue/resources/views', resource_path("views/{$singularSlug}"));
+        $fs->copyDirectory(__DIR__ . '/../../../.stubs/vue/resources/views', resource_path("views"));
 
         // Tests...
         $fs->ensureDirectoryExists(base_path("tests/Feature/{$pluralClass}"));

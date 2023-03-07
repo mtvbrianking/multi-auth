@@ -100,6 +100,8 @@ class InstallCommand extends Command
         foreach ($rii as $splFileInfo) {
             $newPath = \dirname($dirPath) . '/.stubs' . str_replace($dirPath, '', $splFileInfo->getPath());
 
+            $newPath = strtr($newPath, $placeholders);
+
             $fs->ensureDirectoryExists($newPath);
 
             $fileName = $splFileInfo->getFilename();

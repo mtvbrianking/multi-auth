@@ -18,10 +18,6 @@ class {{singularClass}}ServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
         $this->loadRoutesFrom(__DIR__.'/routes/{{singularSnake}}.php');
-        $this->loadViewsFrom(__DIR__.'/resources/views', '{{singularSlug}}');
-
-        Blade::component('{{singularSlug}}-app-layout', View\Components\{{singularClass}}AppLayout::class);
-        Blade::component('{{singularSlug}}-guest-layout', View\Components\{{singularClass}}GuestLayout::class);
     }
 
     /**
@@ -40,6 +36,16 @@ class {{singularClass}}ServiceProvider extends ServiceProvider
     protected function registerMiddleware()
     {
         $router = $this->app['router'];
+        $router->middlewareGroup('{{singularSlug}}', [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Modules\{{pluralClass}}\Http\Middleware\HandleInertiaRequests::class,
+            \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+        ]);
         $router->aliasMiddleware('{{singularSlug}}.auth', Http\Middleware\RedirectIfNot{{singularClass}}::class);
         $router->aliasMiddleware('{{singularSlug}}.guest', Http\Middleware\RedirectIf{{singularClass}}::class);
         $router->aliasMiddleware('{{singularSlug}}.verified', Http\Middleware\Ensure{{singularClass}}EmailIsVerified::class);
