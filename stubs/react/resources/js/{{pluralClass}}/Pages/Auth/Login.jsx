@@ -1,22 +1,22 @@
 import { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
+import Checkbox from '@/Components/Checkbox';
+import GuestLayout from '@/{{pluralClass}}/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Register() {
+export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
         email: '',
         password: '',
-        password_confirmation: '',
+        remember: '',
     });
 
     useEffect(() => {
         return () => {
-            reset('password', 'password_confirmation');
+            reset('password');
         };
     }, []);
 
@@ -27,32 +27,17 @@ export default function Register() {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('register'));
+        post(route('login'));
     };
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title="Log in" />
+
+            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={handleOnChange}
-                        required
-                    />
-
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
                     <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
@@ -62,8 +47,8 @@ export default function Register() {
                         value={data.email}
                         className="mt-1 block w-full"
                         autoComplete="username"
+                        isFocused={true}
                         onChange={handleOnChange}
-                        required
                     />
 
                     <InputError message={errors.email} className="mt-2" />
@@ -78,41 +63,32 @@ export default function Register() {
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
-                        autoComplete="new-password"
+                        autoComplete="current-password"
                         onChange={handleOnChange}
-                        required
                     />
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={handleOnChange}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
+                <div className="block mt-4">
+                    <label className="flex items-center">
+                        <Checkbox name="remember" value={data.remember} onChange={handleOnChange} />
+                        <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+                    </label>
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    >
-                        Already registered?
-                    </Link>
+                    {canResetPassword && (
+                        <Link
+                            href={route('password.request')}
+                            className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        >
+                            Forgot your password?
+                        </Link>
+                    )}
 
                     <PrimaryButton className="ml-4" disabled={processing}>
-                        Register
+                        Log in
                     </PrimaryButton>
                 </div>
             </form>

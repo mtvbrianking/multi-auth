@@ -11,7 +11,7 @@ use App\Modules\{{pluralClass}}\Http\Controllers\Auth\Registered{{singularClass}
 use App\Modules\{{pluralClass}}\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['as' => '{{singularSlug}}.', 'prefix' => '/{{singularSlug}}', 'middleware' => ['web', '{{singularSlug}}.guest']], function () {
+Route::group(['as' => '{{singularSlug}}.', 'prefix' => '/{{singularSlug}}', 'middleware' => ['{{singularSlug}}', '{{singularSlug}}.guest']], function () {
     Route::get('register', [Registered{{singularClass}}Controller::class, 'create'])
         ->name('register');
 
@@ -35,7 +35,7 @@ Route::group(['as' => '{{singularSlug}}.', 'prefix' => '/{{singularSlug}}', 'mid
         ->name('password.store');
 });
 
-Route::group(['as' => '{{singularSlug}}.', 'prefix' => '/{{singularSlug}}', 'middleware' => ['web', '{{singularSlug}}.auth']], function () {
+Route::group(['as' => '{{singularSlug}}.', 'prefix' => '/{{singularSlug}}', 'middleware' => ['{{singularSlug}}', '{{singularSlug}}.auth']], function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
