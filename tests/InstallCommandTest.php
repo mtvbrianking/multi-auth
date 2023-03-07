@@ -29,8 +29,14 @@ class InstallCommandTest extends TestCase
 
     public function testInstallInertiaReactStack()
     {
-        $this->artisan('multi-auth:install --stack=react')
-            ->expectsOutput('Coming soon...')
+        $guard = 'customer';
+
+        $pluralClass = Str::plural(Str::studly($guard));
+        $singularClass = Str::singular(Str::studly($guard));
+
+        $this->artisan("multi-auth:install {$guard} --stack=react")
+            ->expectsOutput("{$singularClass} guard successfully setup.")
+            ->expectsOutput("\nRegister `App\\Modules\\{$pluralClass}\\{$singularClass}ServiceProvider::class` in `config/app.php`")
             ->assertExitCode(1);
     }
 
