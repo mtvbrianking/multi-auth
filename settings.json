@@ -1,0 +1,4 @@
+{
+    // src: https://stackoverflow.com/q/68434489
+    "editor.formatOnSave": false,
+}

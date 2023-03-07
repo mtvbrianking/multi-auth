@@ -4,6 +4,7 @@ namespace Bmatovu\MultiAuth\Console\Traits;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Symfony\Component\Finder\Finder;
 
 trait InstallsInertiaReactStack
 {
@@ -20,15 +21,22 @@ trait InstallsInertiaReactStack
         $singularSlug = Str::singular(Str::slug($guard));
         $singularClass = Str::singular(Str::studly($guard));
 
+        if (!$this->option('dark')) {
+            $finder = (new Finder)
+                ->in(__DIR__ . "/../../../.stubs/react/resources/js")
+                ->name('*.jsx')
+                ->notName('Welcome.jsx');
+
+            $this->removeDarkClasses($finder);
+        }
+
         // Module...
         $fs->ensureDirectoryExists(app_path("Modules/{$pluralClass}"));
         $fs->copyDirectory(__DIR__ . '/../../../.stubs/inertia/src', app_path("Modules/{$pluralClass}"));
 
         // Views...
-        // $fs->ensureDirectoryExists(resource_path("js"));
-        $fs->copyDirectory(__DIR__ . '/../../../.stubs/react/resources/js', resource_path("js"));
-
-        // $fs->ensureDirectoryExists(resource_path("views"));
+        $fs->ensureDirectoryExists(resource_path("js/{$pluralClass}"));
+        $fs->copyDirectory(__DIR__ . '/../../../.stubs/react/resources/js', resource_path("js/{$pluralClass}"));
         $fs->copyDirectory(__DIR__ . '/../../../.stubs/react/resources/views', resource_path("views"));
 
         // Tests...

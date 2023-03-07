@@ -18,6 +18,12 @@ Each user group will be setup in a dedicated modules dir, e.g `app/Modules/Admin
 
 For old versions (Laravel v9 and below) refer to [v11](https://github.com/mtvbrianking/multi-auth/tree/11.x)
 
+## Prerequisite
+
+This package only extends the official `laravel/breeze` starter kit, it doesn't regenerate the frontend assets [js, css - tailwind, vite, ...]
+
+Therefore, you need to use it after scaffolding basic auth using Breeze.
+
 ## Installation
 
 ```bash
@@ -42,7 +48,7 @@ php artisan multi-auth:install {guard}
 +     App\Modules\Admins\AdminServiceProvider::class,
   ],
 ```
-## Add JS, CSS resources to Vite (Inertia - Vue, React)
+## Rebuild JS, CSS resources to Vite (Inertia - Vue, React)
 
 ```diff
   export default defineConfig({
@@ -64,6 +70,8 @@ php artisan multi-auth:install {guard}
       ],
   });
 ```
+
+Read more [Inertia Server Side Rendering](https://inertiajs.com/server-side-rendering)
 
 ## Recompile frontend assets
 

@@ -24,8 +24,7 @@ class InstallCommand extends Command
                             {guard=admin : Name of the guard (user area).}
                             {--stack= : The development stack that should be installed (blade,react,vue,api)}
                             {--dark : Indicate that dark mode support should be installed}
-                            {--pest : Indicate that Pest should be installed}
-                            {--ssr : Indicates if Inertia SSR support should be installed}';
+                            {--pest : Indicate that Pest should be installed}';
 
     /**
      * The console command description.
@@ -53,10 +52,6 @@ class InstallCommand extends Command
         }
 
         $this->hydrateStubs(__DIR__ . '/../../stubs', $this->placeholders($this->argument('guard')));
-
-        if (!$this->option('dark')) {
-            $this->removeDarkClasses(__DIR__ . '/../../.stubs/*/resources/views');
-        }
 
         if ('vue' === $stack) {
             $this->installInertiaVueStack();
@@ -117,12 +112,8 @@ class InstallCommand extends Command
     /**
      * Remove Tailwind dark classes from the given files.
      */
-    protected function removeDarkClasses(string $dirPath): void
+    protected function removeDarkClasses(Finder $finder): void
     {
-        $finder = (new Finder)
-            ->in($dirPath)
-            ->name('*.blade.php');
-
         foreach ($finder as $file) {
             file_put_contents($file->getPathname(), preg_replace('/\sdark:[^\s"\']+/', '', $file->getContents()));
         }

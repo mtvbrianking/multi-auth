@@ -4,6 +4,7 @@ namespace Bmatovu\MultiAuth\Console\Traits;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Symfony\Component\Finder\Finder;
 
 trait InstallsBladeStack
 {
@@ -19,6 +20,15 @@ trait InstallsBladeStack
         $pluralClass = Str::plural(Str::studly($guard));
         $singularSlug = Str::singular(Str::slug($guard));
         $singularClass = Str::singular(Str::studly($guard));
+
+        if (!$this->option('dark')) {
+            $finder = (new Finder)
+                ->in(__DIR__ . '/../../../.stubs/blade/resources/views')
+                ->name('*.blade.php')
+                ->notName('welcome.blade.php');
+
+            $this->removeDarkClasses($finder);
+        }
 
         // Module...
         $fs->ensureDirectoryExists(app_path("Modules/{$pluralClass}"));
