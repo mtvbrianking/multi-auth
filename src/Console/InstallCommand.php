@@ -9,6 +9,7 @@ use Bmatovu\MultiAuth\Console\Traits\InstallsInertiaVueStack;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Finder\Finder;
 
 class InstallCommand extends Command

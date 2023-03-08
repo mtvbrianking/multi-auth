@@ -3,9 +3,8 @@
 namespace App\Modules\{{pluralClass}}\Http\Controllers\Auth;
 
 use App\Modules\{{pluralClass}}\Http\Controllers\Controller;
-use App\Modules\{{pluralClass}}\Providers\RouteServiceProvider;
+use App\Modules\{{pluralClass}}\Http\Requests\Auth\EmailVerificationRequest;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 
 class VerifyEmailController extends Controller

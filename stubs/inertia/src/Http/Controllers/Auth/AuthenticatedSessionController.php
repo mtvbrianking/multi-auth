@@ -4,7 +4,6 @@ namespace App\Modules\{{pluralClass}}\Http\Controllers\Auth;
 
 use App\Modules\{{pluralClass}}\Http\Controllers\Controller;
 use App\Modules\{{pluralClass}}\Http\Requests\Auth\LoginRequest;
-use App\Modules\{{pluralClass}}\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,12 +41,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        Auth::guard('{{singularSlug}}')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/{{singularSlug}}/');
+        return redirect('/{{singularSlug}}');
     }
 }

@@ -4,7 +4,6 @@ namespace App\Modules\{{pluralClass}}\Http\Controllers\Auth;
 
 use App\Modules\{{pluralClass}}\Http\Controllers\Controller;
 use App\Modules\{{pluralClass}}\Models\{{singularClass}};
-use App\Modules\{{pluralClass}}\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,7 +44,7 @@ class Registered{{singularClass}}Controller extends Controller
 
         event(new Registered(${{singularCamel}}));
 
-        Auth::login(${{singularCamel}});
+        Auth::guard('{{singularSlug}}')->login(${{singularCamel}});
 
         return redirect('/{{singularSlug}}');
     }

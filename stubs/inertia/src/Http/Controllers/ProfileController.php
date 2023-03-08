@@ -46,18 +46,18 @@ class ProfileController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         $request->validate([
-            'password' => ['required', 'current-password'],
+            'password' => ['required', 'current-password:{{singularSlug}}'],
         ]);
 
         ${{singularCamel}} = $request->user('{{singularSlug}}');
 
-        Auth::logout();
+        Auth::guard('{{singularSlug}}')->logout();
 
         ${{singularCamel}}->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/{{singularSlug}}/');
+        return Redirect::to('/{{singularSlug}}');
     }
 }

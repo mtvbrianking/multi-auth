@@ -3,7 +3,6 @@
 namespace App\Modules\{{pluralClass}}\Http\Controllers\Auth;
 
 use App\Modules\{{pluralClass}}\Http\Controllers\Controller;
-use App\Modules\{{pluralClass}}\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
