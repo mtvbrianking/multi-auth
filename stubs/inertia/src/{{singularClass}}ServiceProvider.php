@@ -2,11 +2,6 @@
 
 namespace App\Modules\{{pluralClass}};
 
-use App\Modules\{{pluralClass}}\Auth\{{singularClass}}Guard;
-use App\Modules\{{pluralClass}}\Auth\{{singularClass}}UserProvider;
-use App\Modules\{{pluralClass}}\Models\{{singularClass}};
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class {{singularClass}}ServiceProvider extends ServiceProvider
@@ -27,7 +22,6 @@ class {{singularClass}}ServiceProvider extends ServiceProvider
     {
         $this->registerMiddleware();
         $this->injectAuthConfiguration();
-        $this->registerAuthDrivers('{{pluralSlug}}', '{{singularSlug}}', {{singularClass}}::class);
     }
 
     /**
@@ -52,53 +46,15 @@ class {{singularClass}}ServiceProvider extends ServiceProvider
         $router->aliasMiddleware('{{singularSlug}}.password.confirm', Http\Middleware\Require{{singularClass}}Password::class);
     }
 
-    /**
-     * @see \Illuminate\Auth\AuthManager
-     * @see https://www.devrohit.com/custom-authentication-in-laravel
-     */
-    protected function registerAuthDrivers(string $provider, string $guard, string $model)
-    {
-        Auth::provider('{{singularSnake}}_provider_driver', function ($app) use ($model) {
-            return new {{singularClass}}UserProvider($app['hash'], $model);
-        });
-
-        /* AuthManager->createSessionDriver() */
-        Auth::extend('{{singularSnake}}_guard_driver', function ($app) use ($provider, $guard) {
-            $userProvider = Auth::createUserProvider($provider);
-
-            ${{singularCamel}}Guard = new {{singularClass}}Guard($guard, $userProvider, $app['session.store']);
-
-            if (method_exists(${{singularCamel}}Guard, 'setCookieJar')) {
-                ${{singularCamel}}Guard->setCookieJar($this->app['cookie']);
-            }
-
-            if (method_exists(${{singularCamel}}Guard, 'setDispatcher')) {
-                ${{singularCamel}}Guard->setDispatcher($this->app['events']);
-            }
-
-            if (method_exists(${{singularCamel}}Guard, 'setRequest')) {
-                ${{singularCamel}}Guard->setRequest($this->app->refresh('request', ${{singularCamel}}Guard, 'setRequest'));
-            }
-
-            if (isset($config['remember'])) {
-                ${{singularCamel}}Guard->setRememberDuration($config['remember']);
-            }
-
-            return ${{singularCamel}}Guard;
-        });
-    }
-
     protected function injectAuthConfiguration()
     {
         $this->app['config']->set('auth.guards.{{singularSlug}}', [
-            // 'driver' => 'session',
-            'driver' => '{{singularSnake}}_guard_driver',
+            'driver' => 'session',
             'provider' => '{{pluralSlug}}',
         ]);
 
         $this->app['config']->set('auth.providers.{{pluralSlug}}', [
-            // 'driver' => 'eloquent',
-            'driver' => '{{singularSnake}}_provider_driver',
+            'driver' => 'eloquent',
             'model' => Models\{{singularClass}}::class,
         ]);
 
