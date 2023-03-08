@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\{{pluralClass}}\Auth;
 
+use App\Modules\{{pluralClass}}\Models\{{singularClass}};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,7 +17,7 @@ class RegistrationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_new_{{pluralSlug}}_can_register(): void
+    public function test_new_{{pluralSnake}}_can_register(): void
     {
         $response = $this->post('/{{singularSlug}}/register', [
             'name' => 'Test {{singularClass}}',
@@ -25,7 +26,7 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
-        $this->assertAuthenticated();
+        $this->assertAuthenticatedAs({{singularClass}}::first(), '{{singularSlug}}');
         $response->assertRedirect('/{{singularSlug}}');
     }
 }

@@ -1,9 +1,8 @@
 <?php
 
-use App\Modules\{{pluralClass}}\Models\{{singularClass}};
-
 namespace Tests\Feature\{{pluralClass}}\Auth;
 
+use App\Modules\{{pluralClass}}\Models\{{singularClass}};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

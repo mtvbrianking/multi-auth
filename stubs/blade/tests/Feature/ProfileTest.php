@@ -91,7 +91,7 @@ class ProfileTest extends TestCase
             ]);
 
         $response
-            ->assertSessionHasErrorsIn('{{singularSlug}}Deletion', 'password')
+            ->assertSessionHasErrorsIn('userDeletion', 'password')
             ->assertRedirect('/{{singularSlug}}/profile');
 
         $this->assertNotNull(${{singularCamel}}->fresh());

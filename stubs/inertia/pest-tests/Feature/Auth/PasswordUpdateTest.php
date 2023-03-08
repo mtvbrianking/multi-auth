@@ -8,7 +8,8 @@ test('password can be updated', function () {
 
     $response = $this
         ->actingAs(${{singularCamel}}, '{{singularSlug}}')
-        ->patch('/{{singularSlug}}/profile', [
+        ->from('/{{singularSlug}}/profile')
+        ->put('/{{singularSlug}}/password', [
             'current_password' => 'password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
@@ -27,7 +28,7 @@ test('correct password must be provided to update password', function () {
     $response = $this
         ->actingAs(${{singularCamel}}, '{{singularSlug}}')
         ->from('/{{singularSlug}}/profile')
-        ->patch('/{{singularSlug}}/profile', [
+        ->put('/{{singularSlug}}/password', [
             'current_password' => 'wrong-password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',

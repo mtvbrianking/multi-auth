@@ -33,7 +33,7 @@ class EmailVerificationTest extends TestCase
         Event::fake();
 
         $verificationUrl = URL::temporarySignedRoute(
-            'verification.verify',
+            '{{singularSlug}}.verification.verify',
             now()->addMinutes(60),
             ['id' => ${{singularCamel}}->id, 'hash' => sha1(${{singularCamel}}->email)]
         );
@@ -52,7 +52,7 @@ class EmailVerificationTest extends TestCase
         ]);
 
         $verificationUrl = URL::temporarySignedRoute(
-            'verification.verify',
+            '{{singularSlug}}.verification.verify',
             now()->addMinutes(60),
             ['id' => ${{singularCamel}}->id, 'hash' => sha1('wrong-email')]
         );

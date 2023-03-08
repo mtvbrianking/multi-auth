@@ -17,7 +17,7 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_{{pluralSlug}}_can_authenticate_using_the_login_screen(): void
+    public function test_{{pluralSnake}}_can_authenticate_using_the_login_screen(): void
     {
         ${{singularCamel}} = {{singularClass}}::factory()->create();
 
@@ -26,11 +26,11 @@ class AuthenticationTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->assertAuthenticated();
+        $this->assertAuthenticatedAs(${{singularCamel}}, '{{singularSlug}}');
         $response->assertRedirect('/{{singularSlug}}');
     }
 
-    public function test_{{pluralSlug}}_can_not_authenticate_with_invalid_password(): void
+    public function test_{{pluralSnake}}_can_not_authenticate_with_invalid_password(): void
     {
         ${{singularCamel}} = {{singularClass}}::factory()->create();
 
