@@ -10,19 +10,15 @@ This package gives you the ability to separate user areas in your application.
 
 E.g, an ecommerce application with customers, sellers, and administrators user areas using [auth guards](https://laravel.com/docs/master/authentication#adding-custom-guards)
 
-## Older versions
-
-We've switched from [`laravel/ui`](https://github.com/laravel/ui) to [`laravel/breeze`](https://github.com/laravel/breeze) and adopted a modular approach.
-
-Each user group will be setup in a dedicated modules dir, e.g `app/Modules/Admin`.
-
-For old versions (Laravel v9 and below) refer to [v11](https://github.com/mtvbrianking/multi-auth/tree/11.x)
-
 ## Prerequisite
 
-This package only extends the official `laravel/breeze` starter kit, it doesn't regenerate the frontend assets [js, css - tailwind, vite, ...]
+This package only extends the official [`laravel/breeze`](https://github.com/laravel/breeze) starter kit, it doesn't regenerate the frontend assets [js, css - tailwind, vite, ...]
 
 Therefore, you need to use it after scaffolding basic auth using Breeze.
+
+**Breaking Changes**
+
+For old versions (Laravel v9 and below) refer to [v11](https://github.com/mtvbrianking/multi-auth/tree/11.x)
 
 ## Installation
 
@@ -33,7 +29,7 @@ composer require bmatovu/multi-auth --dev
 ## Scaffolding
 
 ```bash
-php artisan multi-auth:install {guard}
+php artisan multi-auth:install admin
 ```
 
 ## Register service provider
@@ -48,7 +44,10 @@ php artisan multi-auth:install {guard}
 +     App\Modules\Admins\AdminServiceProvider::class,
   ],
 ```
-## Rebuild JS, CSS resources to Vite (Inertia - Vue, React)
+
+## Register JS entry point in Vite (Inertia - Vue, React)
+
+> vite.config.js
 
 ```diff
   export default defineConfig({
@@ -71,7 +70,7 @@ php artisan multi-auth:install {guard}
   });
 ```
 
-Read more [Inertia Server Side Rendering](https://inertiajs.com/server-side-rendering)
+Read more about [Inertia Server Side Rendering](https://inertiajs.com/server-side-rendering)
 
 ## Recompile frontend assets
 
