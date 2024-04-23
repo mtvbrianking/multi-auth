@@ -1,22 +1,40 @@
 name: run-tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   tests:
+
     runs-on: ubuntu-latest
+
     strategy:
       fail-fast: true
       matrix:
-        php: [8.1, 8.2]
-        laravel: [^10.0]
+        php: [8.1, 8.2, 8.3]
+        laravel: [^10.0, ^11.0]
         include:
+          - laravel: ^11.0
+            testbench: 9.0.2
           - laravel: ^10.0
             testbench: ^8.0
-    name: Tests P${{ matrix.php }} - L${{ matrix.laravel }} - T${{ matrix.testbench }}
+        exclude:
+          - laravel: ^11.0
+            php: 8.1
+
+    name: P ${{ matrix.php }} L ${{ matrix.laravel }} T ${{ matrix.testbench }}
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -27,14 +45,14 @@ jobs:
           coverage: pcov
 
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.composer/cache/files
           key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-progress --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --dev --no-interaction --no-progress --no-update
           composer update --prefer-dist --no-interaction --no-progress
 
       - name: Create tests database
@@ -46,33 +64,4 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
-
-      - name: Save code coverage report
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage
-          path: coverage.clover
-
-  coverage:
-    needs: tests
-    runs-on: ubuntu-latest
-    name: Coverage
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-
-      - name: Retrieve code coverage report
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage
-
-      - name: Upload code coverage report
-        run: |
-          wget https://scrutinizer-ci.com/ocular.phar
-          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+        run: vendor/bin/phpunit

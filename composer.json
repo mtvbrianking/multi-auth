@@ -22,17 +22,16 @@
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/auth": "^10.0",
-        "illuminate/console": "^10.0",
-        "illuminate/notifications": "^10.0",
-        "illuminate/routing": "^10.0",
-        "illuminate/support": "^10.0"
+        "illuminate/auth": "^10.0|^11.0",
+        "illuminate/console": "^10.0|^11.0",
+        "illuminate/notifications": "^10.0|^11.0",
+        "illuminate/routing": "^10.0|^11.0",
+        "illuminate/support": "^10.0|^11.0"
     },
     "require-dev": {
-        "code-lts/doctum": "^5.5",
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "orchestra/testbench": "^8.0",
-        "phpunit/phpunit": "^10.0"
+        "friendsofphp/php-cs-fixer": "^3.14",
+        "orchestra/testbench": "^8.0|^9.0",
+        "phpunit/phpunit": "^10.0|^11.0"
     },
     "autoload": {
         "psr-4": {
